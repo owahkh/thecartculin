@@ -466,4 +466,31 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  // ---- Bottom nav active state (mobile only) ----
+  var bottomNavLinks = document.querySelectorAll('[data-navlink]');
+  var navTargets = ['home', 'carts', 'gallery', 'contact'].map(function (id) {
+    return document.getElementById(id);
+  }).filter(Boolean);
+
+  function setActiveNav(id) {
+    bottomNavLinks.forEach(function (link) {
+      link.classList.toggle('active', link.getAttribute('data-navlink') === id);
+    });
+  }
+
+  if (navTargets.length && 'IntersectionObserver' in window) {
+    var navObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) setActiveNav(entry.target.id);
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    navTargets.forEach(function (s) { navObserver.observe(s); });
+  }
+
+  bottomNavLinks.forEach(function (link) {
+    link.addEventListener('click', function () {
+      setActiveNav(link.getAttribute('data-navlink'));
+    });
+  });
+
 });

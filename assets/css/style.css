@@ -13,8 +13,8 @@ html {
 
 body {
   font-family: 'Inter', sans-serif;
-  color: #1A1A1A;
-  background-color: #FAF6EF;
+  color: #1B1033;
+  background-color: #FCF9F1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -218,7 +218,7 @@ h1, h2, h3, h4, h5, h6 {
 /* ---- Button Styles ---- */
 .btn-gold {
   background-color: #C9A24B;
-  color: #FAF6EF;
+  color: #F7F2E4;
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
@@ -235,7 +235,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn-outline-gold:hover {
   background-color: #C9A24B;
-  color: #FAF6EF;
+  color: #F7F2E4;
 }
 
 /* ---- Form Styles ---- */
@@ -265,7 +265,7 @@ section {
 
 /* ---- Placeholder Images ---- */
 .placeholder-img {
-  background: linear-gradient(135deg, #e8e0d4 0%, #d4c9b8 100%);
+  background: linear-gradient(135deg, #EFE9DC 0%, #DDD2BF 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -276,8 +276,8 @@ section {
 
 /* ---- Footer ---- */
 footer {
-  background-color: #1A1A1A;
-  color: #FAF6EF;
+  background-color: #1B1033;
+  color: #F7F2E4;
 }
 
 /* ---- Testimonial Card ---- */
@@ -315,7 +315,7 @@ footer {
 }
 
 ::-webkit-scrollbar-track {
-  background: #FAF6EF;
+  background: #EFE9DC;
 }
 
 ::-webkit-scrollbar-thumb {
