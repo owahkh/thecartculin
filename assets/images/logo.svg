@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Outer circle -->
+  <circle cx="100" cy="100" r="100" fill="#640017"/>
+  <!-- Inner border -->
+  <circle cx="100" cy="100" r="92" fill="none" stroke="#EFEFC9" stroke-width="2"/>
+  <!-- Text -->
+  <text x="100" y="95" font-family="Georgia, serif" font-size="24" fill="#EFEFC9" text-anchor="middle" font-style="italic">The</text>
+  <text x="100" y="118" font-family="Georgia, serif" font-size="32" fill="#EFEFC9" text-anchor="middle" font-weight="bold">cart</text>
+  <text x="100" y="140" font-family="Georgia, serif" font-size="20" fill="#EFEFC9" text-anchor="middle">&amp; culinary</text>
+  <text x="100" y="158" font-family="Georgia, serif" font-size="18" fill="#EFEFC9" text-anchor="middle" font-style="italic">co.</text>
+</svg>

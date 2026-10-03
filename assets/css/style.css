@@ -1,0 +1,328 @@
+/* ============================================
+   THE CART & CULIN CO. — Custom Styles
+   ============================================ */
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+
+/* ---- Base Reset & Typography ---- */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: #1A1A1A;
+  background-color: #FAF6EF;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+}
+
+/* ---- Scroll Reveal Animation ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ---- Gold Divider ---- */
+.gold-divider {
+  width: 60px;
+  height: 2px;
+  background-color: #C9A24B;
+  margin: 0 auto;
+}
+
+.gold-divider-left {
+  width: 60px;
+  height: 2px;
+  background-color: #C9A24B;
+}
+
+/* ---- Sticky Header ---- */
+.header-scrolled {
+  background-color: rgba(250, 246, 239, 0.97) !important;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Header over the dark hero: make text legible */
+#siteHeader:not(.header-scrolled) .header-brand-name,
+#siteHeader:not(.header-scrolled) .header-brand-tag,
+#siteHeader:not(.header-scrolled) .nav-link {
+  color: #ffffff;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.75), 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+#siteHeader:not(.header-scrolled) .nav-link:hover {
+  color: #C9A24B;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.75);
+}
+
+#siteHeader:not(.header-scrolled) #hamburger span {
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* ---- Hero Section ---- */
+.hero-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(26, 26, 26, 0.65) 0%,
+    rgba(26, 26, 26, 0.45) 50%,
+    rgba(26, 26, 26, 0.7) 100%
+  );
+}
+
+/* ---- Mobile Navigation ---- */
+.mobile-nav {
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobile-nav.open {
+  transform: translateX(0);
+}
+
+.mobile-nav-overlay {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.mobile-nav-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ---- Card Hover Effects ---- */
+.cart-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cart-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+              0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+.cart-card .card-image {
+  transition: transform 0.5s ease;
+}
+
+.cart-card:hover .card-image {
+  transform: scale(1.05);
+}
+
+/* ---- Gallery Lightbox ---- */
+.lightbox {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.lightbox.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-image {
+  max-height: 85vh;
+  max-width: 90vw;
+  object-fit: contain;
+}
+
+/* ---- Cart Details Modal ---- */
+.cart-modal-overlay {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#cartModal.active .cart-modal-overlay {
+  opacity: 1;
+}
+
+.cart-modal {
+  transform: translateY(20px) scale(0.96);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+#cartModal.active .cart-modal {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* ---- Cart Tiles ---- */
+.cart-tile:focus-visible {
+  outline: 2px solid #C9A24B;
+  outline-offset: 2px;
+}
+
+/* ---- Gallery Grid ---- */
+.gallery-item {
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.gallery-item img {
+  transition: transform 0.5s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.08);
+}
+
+/* ---- WhatsApp Button Pulse ---- */
+@keyframes whatsapp-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(201, 162, 75, 0.5); }
+  70% { box-shadow: 0 0 0 15px rgba(201, 162, 75, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(201, 162, 75, 0); }
+}
+
+.whatsapp-fab {
+  animation: whatsapp-pulse 2.5s infinite;
+}
+
+.whatsapp-fab:hover {
+  animation: none;
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+
+/* ---- Occasion Icons ---- */
+.occasion-icon {
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.occasion-icon:hover {
+  color: #6B1E23;
+  transform: translateY(-2px);
+}
+
+/* ---- Button Styles ---- */
+.btn-gold {
+  background-color: #C9A24B;
+  color: #FAF6EF;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-gold:hover {
+  background-color: #6B1E23;
+  transform: translateY(-1px);
+}
+
+.btn-outline-gold {
+  border: 2px solid #C9A24B;
+  color: #C9A24B;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-outline-gold:hover {
+  background-color: #C9A24B;
+  color: #FAF6EF;
+}
+
+/* ---- Form Styles ---- */
+.form-input {
+  border: 1px solid #e5e7eb;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #C9A24B;
+  box-shadow: 0 0 0 3px rgba(201, 162, 75, 0.15);
+}
+
+/* ---- Section Spacing ---- */
+section {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+@media (min-width: 768px) {
+  section {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+/* ---- Placeholder Images ---- */
+.placeholder-img {
+  background: linear-gradient(135deg, #e8e0d4 0%, #d4c9b8 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a09282;
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* ---- Footer ---- */
+footer {
+  background-color: #1A1A1A;
+  color: #FAF6EF;
+}
+
+/* ---- Testimonial Card ---- */
+.testimonial-card {
+  border-left: 3px solid #C9A24B;
+}
+
+/* ---- Why Choose Us Icon ---- */
+.why-us-icon {
+  color: #C9A24B;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+  section {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .hero-headline {
+    font-size: 2.25rem !important;
+    line-height: 1.2 !important;
+  }
+}
+
+/* ---- Stat Counter ---- */
+.stat-number {
+  font-family: 'Playfair Display', serif;
+  color: #C9A24B;
+}
+
+/* ---- Smooth Scrollbar ---- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAF6EF;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C9A24B;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6B1E23;
+}

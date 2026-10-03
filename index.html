@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE CART &amp; CULINARY CO. | Luxury Cart Catering for Weddings &amp; Events</title>
+  <meta name="description" content="Premium cart catering for weddings, corporate events, and private parties. THE CART &amp; CULINARY CO. brings iconic food cart experiences — chaat, dessert, beverage &amp; live counters — to Delhi NCR, Aligarh, Meerut, West UP and beyond.">
+  <meta name="author" content="The Cart & Culinary Co.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="THE CART & CULINARY CO. | Luxury Cart Catering for Weddings & Events">
+  <meta property="og:description" content="Premium cart catering for weddings, corporate events, and private parties.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="THE CART & CULINARY CO. | Luxury Cart Catering for Weddings & Events">
+  <meta name="twitter:description" content="Premium cart catering for weddings, corporate events, and private parties.">
+  <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            charcoal: '#2F1B1A',
+            ivory: '#EFEFC9',
+            gold: '#5A5E27',
+            maroon: '#640017',
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ---- Base Reset & Typography ---- */
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body { font-family: 'Inter', sans-serif; color: #1A1A1A; background-color: #FAF6EF; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; }
+
+    /* ---- Scroll Reveal ---- */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease-out, transform 0.7s ease-out; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ---- Gold Divider ---- */
+    .gold-divider { width: 60px; height: 2px; background-color: #5A5E27; margin: 0 auto; }
+
+    /* ---- Sticky Header ---- */
+    .header-scrolled { background-color: rgba(239, 239, 201, 0.97) !important; backdrop-filter: blur(10px); box-shadow: 0 1px 10px rgba(0, 0, 0, 0.08); }
+
+    /* ---- Hero Overlay ---- */
+    .hero-overlay { background: linear-gradient(to bottom, rgba(47,27,26,0.65) 0%, rgba(47,27,26,0.45) 50%, rgba(47,27,26,0.7) 100%); }
+
+    /* ---- Mobile Navigation ---- */
+    .mobile-nav { transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+    .mobile-nav.open { transform: translateX(0); }
+    .mobile-nav-overlay { opacity: 0; visibility: hidden; transition: opacity 0.35s ease, visibility 0.35s ease; }
+    .mobile-nav-overlay.open { opacity: 1; visibility: visible; }
+
+    /* ---- Card Hover ---- */
+    .cart-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .cart-card:hover { transform: translateY(-6px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1); }
+    .cart-card .card-image { transition: transform 0.5s ease; }
+    .cart-card:hover .card-image { transform: scale(1.05); }
+
+    /* ---- Lightbox ---- */
+    .lightbox { opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+    .lightbox.active { opacity: 1; visibility: visible; }
+    .lightbox-image { max-height: 85vh; max-width: 90vw; object-fit: contain; }
+
+    /* ---- Gallery ---- */
+    .gallery-item { overflow: hidden; cursor: pointer; background: #e8e0d4; }
+    .gallery-item img { transition: transform 0.5s ease; width: 100%; height: 100%; object-fit: cover; }
+    .gallery-item:hover img { transform: scale(1.08); }
+
+    /* ---- WhatsApp Pulse ---- */
+    @keyframes whatsapp-pulse { 0% { box-shadow: 0 0 0 0 rgba(201,162,75,0.5); } 70% { box-shadow: 0 0 0 15px rgba(201,162,75,0); } 100% { box-shadow: 0 0 0 0 rgba(201,162,75,0); } }
+    .whatsapp-fab { animation: whatsapp-pulse 2.5s infinite; }
+    .whatsapp-fab:hover { animation: none; transform: scale(1.1); transition: transform 0.2s ease; }
+
+    /* ---- Occasion Icons ---- */
+    .occasion-icon { transition: color 0.2s ease, transform 0.2s ease; }
+    .occasion-icon:hover { color: #640017; transform: translateY(-2px); }
+
+    /* ---- Buttons ---- */
+    .btn-gold { background-color: #5A5E27; color: #EFEFC9; transition: background-color 0.2s ease, transform 0.2s ease; }
+    .btn-gold:hover { background-color: #640017; transform: translateY(-1px); }
+
+    /* ---- Form Inputs ---- */
+    .form-input { border: 1px solid #e5e7eb; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+    .form-input:focus { outline: none; border-color: #5A5E27; box-shadow: 0 0 0 3px rgba(90,94,39,0.15); }
+
+    /* ---- Section Spacing ---- */
+    section { padding-top: 5rem; padding-bottom: 5rem; }
+    @media (min-width: 768px) { section { padding-top: 6rem; padding-bottom: 6rem; } }
+
+    /* ---- Placeholder Images ---- */
+    .placeholder-img { background: linear-gradient(135deg, #e8e0d4 0%, #d4c9b8 100%); display: flex; align-items: center; justify-content: center; color: #a09282; font-size: 0.85rem; font-style: italic; }
+
+    /* ---- Footer ---- */
+    footer { background-color: #2F1B1A; color: #EFEFC9; }
+
+    /* ---- Testimonial Card ---- */
+    .testimonial-card { border-left: 3px solid #5A5E27; }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 768px) { section { padding-top: 3.5rem; padding-bottom: 3.5rem; } .hero-headline { font-size: 2.25rem !important; line-height: 1.2 !important; } }
+
+    /* ---- Stat Counter ---- */
+    .stat-number { font-family: 'Playfair Display', serif; color: #5A5E27; }
+
+    /* ---- Scrollbar ---- */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #EFEFC9; }
+    ::-webkit-scrollbar-thumb { background: #5A5E27; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #640017; }
+  </style>
+</head>
+
+<body class="bg-ivory text-charcoal font-sans">
+
+  <!-- ============================================
+       SECTION 1: STICKY HEADER / NAV
+       ============================================ -->
+  <header id="siteHeader" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <a href="#" class="flex items-center gap-2">
+          <img src="assets/images/logo.svg" alt="The Cart & Culinary Co." class="h-12 w-12 rounded-full">
+          <div class="flex flex-col">
+            <span class="font-serif text-xl sm:text-2xl font-bold text-charcoal tracking-wide">THE CART &amp; CULINARY CO.</span>
+            <span class="text-[10px] sm:text-xs tracking-[0.2em] uppercase text-gray-500 mt-0.5">Premium Cart Catering</span>
+          </div>
+        </a>
+        <nav class="hidden md:flex items-center gap-8">
+          <a href="#home" class="text-sm font-medium text-charcoal hover:text-gold transition-colors">Home</a>
+          <a href="#about" class="text-sm font-medium text-charcoal hover:text-gold transition-colors">About</a>
+          <a href="#carts" class="text-sm font-medium text-charcoal hover:text-gold transition-colors">Our Carts</a>
+          <a href="#occasions" class="text-sm font-medium text-charcoal hover:text-gold transition-colors">Occasions</a>
+          <a href="#gallery" class="text-sm font-medium text-charcoal hover:text-gold transition-colors">Gallery</a>
+          <a href="#contact" class="text-sm font-medium text-charcoal hover:text-gold transition-colors">Contact</a>
+        </nav>
+        <a href="https://wa.me/919910000122?text=Hi%2C%20I%27m%20interested%20in%20The%20Cart%20%26%20Culinary%20Co.%20for%20my%20event." target="_blank" rel="noopener noreferrer" class="hidden md:inline-flex items-center gap-2 btn-gold px-5 py-2.5 rounded-full text-sm font-medium">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Enquire on WhatsApp
+        </a>
+        <button id="hamburger" class="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5" aria-label="Toggle menu" aria-expanded="false">
+          <span class="block w-6 h-0.5 bg-charcoal transition-all duration-300"></span>
+          <span class="block w-6 h-0.5 bg-charcoal transition-all duration-300"></span>
+          <span class="block w-6 h-0.5 bg-charcoal transition-all duration-300"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div id="mobileNavOverlay" class="mobile-nav-overlay fixed inset-0 bg-black/40 z-40 md:hidden"></div>
+  <nav id="mobileNav" class="mobile-nav fixed top-0 right-0 w-72 h-full bg-ivory z-50 md:hidden shadow-2xl">
+    <div class="flex flex-col p-8 pt-24 gap-6">
+      <a href="#home" class="mobile-nav-link text-lg font-medium text-charcoal hover:text-gold transition-colors">Home</a>
+      <a href="#about" class="mobile-nav-link text-lg font-medium text-charcoal hover:text-gold transition-colors">About</a>
+      <a href="#carts" class="mobile-nav-link text-lg font-medium text-charcoal hover:text-gold transition-colors">Our Carts</a>
+      <a href="#occasions" class="mobile-nav-link text-lg font-medium text-charcoal hover:text-gold transition-colors">Occasions</a>
+      <a href="#gallery" class="mobile-nav-link text-lg font-medium text-charcoal hover:text-gold transition-colors">Gallery</a>
+      <a href="#contact" class="mobile-nav-link text-lg font-medium text-charcoal hover:text-gold transition-colors">Contact</a>
+      <div class="mt-4 pt-6 border-t border-gray-200">
+        <!-- UPDATE: Replace 919910000122 with actual WhatsApp number -->
+        <a href="https://wa.me/919910000122?text=Hi%2C%20I%27m%20interested%20in%20The%20Cart%20%26%20Culinary%20Co.%20for%20my%20event." target="_blank" rel="noopener noreferrer" class="mobile-nav-link inline-flex items-center gap-2 btn-gold px-5 py-3 rounded-full text-sm font-medium w-full justify-center">Enquire on WhatsApp</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ============================================
+       SECTION 2: HERO
+       ============================================ -->
+  <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="https://images.unsplash.com/photo-1596797038530-2c107229654b?w=1920&q=80" alt="Premium food cart setup at a wedding" class="w-full h-full object-cover">
+    </div>
+    <div class="hero-overlay absolute inset-0"></div>
+    <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+      <h1 class="hero-headline font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
+        Where Iconic Flavours Meet<br class="hidden sm:block"> Every Celebration
+      </h1>
+      <p class="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto mb-10 leading-relaxed">
+        THE CART &amp; CULINARY CO. brings India's most loved cart experiences — chaat, dessert, beverage &amp; live counters — straight to your wedding, party or corporate event.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <!-- UPDATE: Replace 919910000122 with actual WhatsApp number -->
+        <a href="https://wa.me/919910000122?text=Hi%2C%20I%27m%20interested%20in%20The%20Cart%20%26%20Culinary%20Co.%20for%20my%20event." target="_blank" rel="noopener noreferrer" class="btn-gold px-8 py-3.5 rounded-full text-base font-medium inline-flex items-center gap-2">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Get a Free Quote on WhatsApp
+        </a>
+        <a href="#carts" class="text-white border border-white/40 px-8 py-3.5 rounded-full text-base font-medium hover:bg-white/10 transition-colors">See Our Carts</a>
+      </div>
+    </div>
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+      <svg class="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+    </div>
+  </section>
+
+
+  <!-- ============================================
+       SECTION 3: ABOUT / THE IDEA
+       ============================================ -->
+  <section id="about" class="bg-ivory">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <p class="text-gold font-medium tracking-[0.15em] uppercase text-sm mb-3">The Idea</p>
+        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal mb-6">India's Best Brands.<br>Your Private Event.</h2>
+        <div class="gold-divider mx-auto mb-8"></div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center mb-20">
+        <div class="reveal">
+          <p class="text-lg leading-relaxed text-gray-700 mb-6">India's most iconic food and dessert brands don't cater private events — and they have no setup to do so. That's the gap <strong class="text-charcoal">THE CART &amp; CULINARY CO.</strong> fills.</p>
+          <p class="text-lg leading-relaxed text-gray-700 mb-6">We curate premium, branded-style food cart experiences — from chaat and dessert carts to live cooking counters and beverage stations — and bring them to your wedding, party, or corporate event. Everything is customised per event, end-to-end.</p>
+          <p class="text-lg leading-relaxed text-gray-700">As a <strong class="text-charcoal">registered Private Limited company</strong>, we operate with the professionalism and reliability your event deserves — not a one-person setup, but a team that delivers.</p>
+        </div>
+        <div class="reveal reveal-delay-2">
+          <img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=800&q=80" alt="Premium event catering setup" class="rounded-xl w-full aspect-[4/3] object-cover">
+        </div>
+      </div>
+      <!-- UPDATE: Replace placeholder numbers with real data -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+        <div class="reveal reveal-delay-1"><div class="stat-number text-4xl sm:text-5xl font-bold mb-2">10,000+</div><p class="text-gray-600 font-medium">Events Hosted</p></div>
+        <div class="reveal reveal-delay-2"><div class="stat-number text-4xl sm:text-5xl font-bold mb-2">30+</div><p class="text-gray-600 font-medium">Years of Experience</p></div>
+        <div class="reveal reveal-delay-3"><div class="stat-number text-4xl sm:text-5xl font-bold mb-2">100%</div><p class="text-gray-600 font-medium">Customisable Menus</p></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================
+       SECTION 4: OUR CARTS (Detailed Menu Grid)
+       ============================================ -->
+  <section id="carts" class="bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <p class="text-gold font-medium tracking-[0.15em] uppercase text-sm mb-3">What We Offer</p>
+        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal mb-6">Our Cart Experiences</h2>
+        <div class="gold-divider mx-auto mb-6"></div>
+        <p class="text-gray-600 max-w-2xl mx-auto text-lg">Each cart is a complete experience — curated, styled, staffed, and ready to serve your guests.</p>
+      </div>
+
+      <!-- Kunafa Cart -->
+      <div class="mb-16 bg-ivory rounded-2xl overflow-hidden shadow-sm reveal">
+        <div class="grid md:grid-cols-2 gap-0">
+          <div class="overflow-hidden"><img src="https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=800&q=80" alt="Luxury Kunafa Cart - Middle Eastern Dessert" class="w-full h-full object-cover aspect-[4/3]"></div>
+          <div class="p-8 lg:p-10">
+            <p class="text-gold font-medium tracking-[0.15em] uppercase text-xs mb-2">Luxury Kunafa Cart</p>
+            <h3 class="font-serif text-2xl lg:text-3xl font-bold text-charcoal mb-4">Kunafa Cart</h3>
+            <p class="text-gray-600 text-sm leading-relaxed mb-6">Transport your guests with the rich, aromatic flavors of the Middle East through a decadent dessert experience. Freshly baked, warm Kunafa served live with mesmerizing presentation.</p>
+            <div class="mb-6">
+              <p class="text-sm font-semibold text-charcoal mb-2">CHOICE OF BASE</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Classic Kataifi (Crispy Shredded Phyllo)</li>
+                <li>• Na'ama (Fine Semolina Dough)</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">FRESH INGREDIENTS & CHEESE</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Authentic Akawi & Nabulsi Cheese</li>
+                <li>• Rich Ashta (Clotted Cream)</li>
+                <li>• Aromatic Orange Blossom & Rosewater Syrup</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">SIGNATURE TOPPINGS</p>
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li>• Crushed Emerald Pistachios</li>
+                <li>• Nutella Syrup</li>
+                <li>• White Chocolate Syrup</li>
+                <li>• Spiced Honey Drizzle</li>
+                <li>• Liquid Belgian Chocolate</li>
+              </ul>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+              <div>
+                <p class="text-lg font-bold text-gold">Starting at ₹20,000</p>
+                <p class="text-xs text-gray-500">for 50 Kunafa | ₹30,000 for 100</p>
+              </div>
+              <a href="#" class="cart-enquire-btn inline-flex items-center gap-1.5 btn-gold px-5 py-2.5 rounded-full text-sm font-medium" data-cart-name="Kunafa Cart">Enquire</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Crepe Cart -->
+      <div class="mb-16 bg-ivory rounded-2xl overflow-hidden shadow-sm reveal">
+        <div class="grid md:grid-cols-2 gap-0">
+          <div class="p-8 lg:p-10 order-2 md:order-1">
+            <p class="text-gold font-medium tracking-[0.15em] uppercase text-xs mb-2">Luxury Crepe Cart</p>
+            <h3 class="font-serif text-2xl lg:text-3xl font-bold text-charcoal mb-4">Crepe Cart</h3>
+            <p class="text-gray-600 text-sm leading-relaxed mb-6">Bring the charm of a Parisian patisserie to your celebration. A sophisticated, live-action culinary experience where guests watch custom sweet or savory crepes spun to golden perfection.</p>
+            <div class="mb-6">
+              <p class="text-sm font-semibold text-charcoal mb-2">CHOICE OF BATTER</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Classic French Vanilla</li>
+                <li>• Rich Dark Chocolate</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">FRESH INGREDIENTS</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Sliced Strawberries & Bananas</li>
+                <li>• Mixed Summer Berries</li>
+                <li>• Crushed Toasted Hazelnuts & Almonds</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">SIGNATURE TOPPINGS</p>
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li>• Nutella & White Chocolate</li>
+                <li>• Warm Salted Caramel</li>
+                <li>• Pure Maple Syrup</li>
+                <li>• Freshly Whipped Chantilly Cream</li>
+              </ul>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+              <div>
+                <p class="text-lg font-bold text-gold">Starting at ₹15,000</p>
+                <p class="text-xs text-gray-500">for up to 100 pax | ₹25,000 for 200</p>
+              </div>
+              <a href="#" class="cart-enquire-btn inline-flex items-center gap-1.5 btn-gold px-5 py-2.5 rounded-full text-sm font-medium" data-cart-name="Crepe Cart">Enquire</a>
+            </div>
+          </div>
+          <div class="overflow-hidden order-1 md:order-2"><img src="https://images.unsplash.com/photo-1755594492462-2907f15cb4b3?w=800&q=80" alt="Luxury Crepe Cart - French Crepes" class="w-full h-full object-cover aspect-[4/3]"></div>
+        </div>
+      </div>
+
+      <!-- Pancake Cart -->
+      <div class="mb-16 bg-ivory rounded-2xl overflow-hidden shadow-sm reveal">
+        <div class="grid md:grid-cols-2 gap-0">
+          <div class="overflow-hidden"><img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=800&q=80" alt="Luxury Pancake Cart - Fluffy Pancakes" class="w-full h-full object-cover aspect-[4/3]"></div>
+          <div class="p-8 lg:p-10">
+            <p class="text-gold font-medium tracking-[0.15em] uppercase text-xs mb-2">Luxury Pancake Cart</p>
+            <h3 class="font-serif text-2xl lg:text-3xl font-bold text-charcoal mb-4">Pancake Cart</h3>
+            <p class="text-gray-600 text-sm leading-relaxed mb-6">Indulge your guests with fluffy, freshly flipped stackable treats. A warm, comforting, yet refined brunch vibe with live mini & soufflé pancake station.</p>
+            <div class="mb-6">
+              <p class="text-sm font-semibold text-charcoal mb-2">CHOICE OF BATTER</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Golden Buttermilk</li>
+                <li>• Red Velvet</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">FRESH INGREDIENTS</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Fresh Strawberries & Blueberries</li>
+                <li>• Caramelized Bananas</li>
+                <li>• Chocolate Chips & Toasted Pecans</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">SIGNATURE TOPPINGS</p>
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li>• Organic Maple Syrup</li>
+                <li>• Warm Nutella & White Chocolate</li>
+                <li>• Salted Caramel Drizzle</li>
+                <li>• Whipped Vanilla Cream</li>
+              </ul>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+              <div>
+                <p class="text-lg font-bold text-gold">Starting at ₹15,000</p>
+                <p class="text-xs text-gray-500">for up to 100 pax | ₹25,000 for 200</p>
+              </div>
+              <a href="#" class="cart-enquire-btn inline-flex items-center gap-1.5 btn-gold px-5 py-2.5 rounded-full text-sm font-medium" data-cart-name="Pancake Cart">Enquire</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Waffle Cart -->
+      <div class="mb-16 bg-ivory rounded-2xl overflow-hidden shadow-sm reveal">
+        <div class="grid md:grid-cols-2 gap-0">
+          <div class="p-8 lg:p-10 order-2 md:order-1">
+            <p class="text-gold font-medium tracking-[0.15em] uppercase text-xs mb-2">Luxury Waffle Cart</p>
+            <h3 class="font-serif text-2xl lg:text-3xl font-bold text-charcoal mb-4">Waffle Cart</h3>
+            <p class="text-gray-600 text-sm leading-relaxed mb-6">Elevate your dessert spread with the irresistible aroma of golden, crisp Liege and Belgian waffles crafted live with artisanal toppings and fresh fruits.</p>
+            <div class="mb-6">
+              <p class="text-sm font-semibold text-charcoal mb-2">CHOICE OF BASE</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Classic Pearl-Sugar Liege Waffle</li>
+                <li>• Dark Chocolate Belgian Waffle</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">FRESH INGREDIENTS</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Fresh Berry Compote</li>
+                <li>• Sliced Bananas & Mangoes</li>
+                <li>• Toasted Almond Flakes</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">SIGNATURE TOPPINGS</p>
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li>• Belgian Chocolate Drizzle</li>
+                <li>• Warm Biscoff Spread & Cookie Crumbs</li>
+                <li>• Sweetened Condensed Milk</li>
+                <li>• Fresh Chantilly Cream</li>
+              </ul>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+              <div>
+                <p class="text-lg font-bold text-gold">Starting at ₹15,000</p>
+                <p class="text-xs text-gray-500">for up to 100 pax | ₹25,000 for 200</p>
+              </div>
+              <a href="#" class="cart-enquire-btn inline-flex items-center gap-1.5 btn-gold px-5 py-2.5 rounded-full text-sm font-medium" data-cart-name="Waffle Cart">Enquire</a>
+            </div>
+          </div>
+          <div class="overflow-hidden order-1 md:order-2"><img src="https://images.unsplash.com/photo-1754444217183-40cb409ad3d8?w=800&q=80" alt="Luxury Waffle Cart - Belgian Waffles" class="w-full h-full object-cover aspect-[4/3]"></div>
+        </div>
+      </div>
+
+      <!-- Dumplings Cart -->
+      <div class="mb-16 bg-ivory rounded-2xl overflow-hidden shadow-sm reveal">
+        <div class="grid md:grid-cols-2 gap-0">
+          <div class="overflow-hidden"><img src="https://images.unsplash.com/photo-1647999019630-dabe1a837693?w=800&q=80" alt="Luxury Dumplings Cart - Delhi Momos" class="w-full h-full object-cover aspect-[4/3]"></div>
+          <div class="p-8 lg:p-10">
+            <p class="text-gold font-medium tracking-[0.15em] uppercase text-xs mb-2">Luxury Dumplings Cart</p>
+            <h3 class="font-serif text-2xl lg:text-3xl font-bold text-charcoal mb-4">Delhi Dumplings Cart</h3>
+            <p class="text-gray-600 text-sm leading-relaxed mb-6">Bring the iconic street-food energy of Capital city dim sums to an elevated event space. Piping-hot, handcrafted momos and dim sums with gourmet fillings.</p>
+            <div class="mb-6">
+              <p class="text-sm font-semibold text-charcoal mb-2">CHOICE OF DUMPLINGS</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Classic Steamed Vegetable & Edamame</li>
+                <li>• Paneer & Exotic Herb Dumplings</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">FRESH INGREDIENTS</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Scallions & Crispy Garlic</li>
+                <li>• Toasted Sesame Seeds</li>
+                <li>• Chili Oil Crunch</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">SIGNATURE TOPPINGS & DIPS</p>
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li>• Fiery Delhi Red Chili Sauce</li>
+                <li>• Tangy Sesame Peanut Dip</li>
+                <li>• Soy-Ginger Glaze</li>
+              </ul>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+              <div>
+                <p class="text-lg font-bold text-gold">Starting at ₹15,000</p>
+                <p class="text-xs text-gray-500">for up to 100 pax | ₹25,000 for 200</p>
+              </div>
+              <a href="#" class="cart-enquire-btn inline-flex items-center gap-1.5 btn-gold px-5 py-2.5 rounded-full text-sm font-medium" data-cart-name="Delhi Dumplings Cart">Enquire</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pizza Cart -->
+      <div class="mb-16 bg-ivory rounded-2xl overflow-hidden shadow-sm reveal">
+        <div class="grid md:grid-cols-2 gap-0">
+          <div class="p-8 lg:p-10 order-2 md:order-1">
+            <p class="text-gold font-medium tracking-[0.15em] uppercase text-xs mb-2">Luxury Pizza Cart</p>
+            <h3 class="font-serif text-2xl lg:text-3xl font-bold text-charcoal mb-4">Pizza Cart</h3>
+            <p class="text-gray-600 text-sm leading-relaxed mb-6">Bring the warmth of an authentic Neapolitan pizzeria straight to your guests. High-heat portable stone ovens yield blistered, airy crusts baked live in minutes.</p>
+            <div class="mb-6">
+              <p class="text-sm font-semibold text-charcoal mb-2">CHOICE OF BASE</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Classic Margherita (Fresh Basil & Mozzarella)</li>
+                <li>• Gourmet Truffle Mushroom & Herb</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">FRESH INGREDIENTS</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Fresh Fior di Latte Mozzarella</li>
+                <li>• Wild Mushrooms & Baby Spinach</li>
+                <li>• Charred Bell Peppers & Olives</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">SIGNATURE TOPPINGS</p>
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li>• Extra Virgin Olive Oil & Chili Flakes</li>
+                <li>• Spicy Honey Drizzle</li>
+                <li>• Aged Balsamic Glaze</li>
+                <li>• Fresh Basil Leaves</li>
+              </ul>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+              <div>
+                <p class="text-lg font-bold text-gold">Starting at ₹15,000</p>
+                <p class="text-xs text-gray-500">for up to 100 pax | ₹25,000 for 200</p>
+              </div>
+              <a href="#" class="cart-enquire-btn inline-flex items-center gap-1.5 btn-gold px-5 py-2.5 rounded-full text-sm font-medium" data-cart-name="Pizza Cart">Enquire</a>
+            </div>
+          </div>
+          <div class="overflow-hidden order-1 md:order-2"><img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80" alt="Luxury Pizza Cart - Neapolitan Pizza" class="w-full h-full object-cover aspect-[4/3]"></div>
+        </div>
+      </div>
+
+      <!-- Pasta Cart -->
+      <div class="mb-16 bg-ivory rounded-2xl overflow-hidden shadow-sm reveal">
+        <div class="grid md:grid-cols-2 gap-0">
+          <div class="overflow-hidden"><img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=800&q=80" alt="Luxury Pasta Cart - Italian Pasta" class="w-full h-full object-cover aspect-[4/3]"></div>
+          <div class="p-8 lg:p-10">
+            <p class="text-gold font-medium tracking-[0.15em] uppercase text-xs mb-2">Luxury Pasta Cart</p>
+            <h3 class="font-serif text-2xl lg:text-3xl font-bold text-charcoal mb-4">Aakhri Pasta Cart</h3>
+            <p class="text-gray-600 text-sm leading-relaxed mb-6">Turn your event into an Italian feast. A theatrical live-cooking experience where guests customize artisanal pasta dishes tossed in rich, bubbling sauces.</p>
+            <div class="mb-6">
+              <p class="text-sm font-semibold text-charcoal mb-2">CHOICE OF PASTA</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Penne Rigate</li>
+                <li>• Fresh Fettuccine</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">FRESH INGREDIENTS</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Cherry Tomatoes & Baby Spinach</li>
+                <li>• Black Olives & Sun-Dried Tomatoes</li>
+                <li>• Roasted Garlic & Sauteed Mushrooms</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">SIGNATURE TOPPINGS & SAUCES</p>
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li>• Creamy Alfredo Sauce</li>
+                <li>• Rich San Marzano Marinara</li>
+                <li>• Aged Parmesan & Fresh Basil</li>
+                <li>• Chili Flakes & Herb Olive Oil</li>
+              </ul>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+              <div>
+                <p class="text-lg font-bold text-gold">Starting at ₹15,000</p>
+                <p class="text-xs text-gray-500">for up to 100 pax | ₹25,000 for 200</p>
+              </div>
+              <a href="#" class="cart-enquire-btn inline-flex items-center gap-1.5 btn-gold px-5 py-2.5 rounded-full text-sm font-medium" data-cart-name="Pasta Cart">Enquire</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shawarma Cart -->
+      <div class="mb-16 bg-ivory rounded-2xl overflow-hidden shadow-sm reveal">
+        <div class="grid md:grid-cols-2 gap-0">
+          <div class="p-8 lg:p-10 order-2 md:order-1">
+            <p class="text-gold font-medium tracking-[0.15em] uppercase text-xs mb-2">Luxury Shawarma Cart</p>
+            <h3 class="font-serif text-2xl lg:text-3xl font-bold text-charcoal mb-4">Shawarma Cart</h3>
+            <p class="text-gray-600 text-sm leading-relaxed mb-6">Bring the vibrant night-market energy of Middle Eastern street food to your event. Live vertical rotisserie where succulent fillings are shaved fresh and wrapped in warm pita.</p>
+            <div class="mb-6">
+              <p class="text-sm font-semibold text-charcoal mb-2">CHOICE OF BASE</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Spiced Paneer & Cottage Cheese</li>
+                <li>• Roasted Falafel & Mediterranean Veggies</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">FRESH INGREDIENTS</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Pickled Turnips & Cucumbers</li>
+                <li>• Shredded Iceberg & Tomatoes</li>
+                <li>• Parsley & Sumac Onion Salad</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">SIGNATURE TOPPINGS & SAUCES</p>
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li>• Classic Garlic Toum</li>
+                <li>• Creamy Tahini Sauce</li>
+                <li>• Spicy Harissa Glaze</li>
+              </ul>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+              <div>
+                <p class="text-lg font-bold text-gold">Starting at ₹15,000</p>
+                <p class="text-xs text-gray-500">for up to 100 pax | ₹25,000 for 200</p>
+              </div>
+              <a href="#" class="cart-enquire-btn inline-flex items-center gap-1.5 btn-gold px-5 py-2.5 rounded-full text-sm font-medium" data-cart-name="Shawarma Cart">Enquire</a>
+            </div>
+          </div>
+          <div class="overflow-hidden order-1 md:order-2"><img src="https://images.unsplash.com/photo-1744534637339-4ecf53d1b800?w=800&q=80" alt="Luxury Shawarma Cart - Middle Eastern Shawarma" class="w-full h-full object-cover aspect-[4/3]"></div>
+        </div>
+      </div>
+
+      <!-- Chakhna Cart -->
+      <div class="mb-16 bg-ivory rounded-2xl overflow-hidden shadow-sm reveal">
+        <div class="grid md:grid-cols-2 gap-0">
+          <div class="overflow-hidden"><img src="assets/images/chakhna.jpg" alt="Luxury Chakhna Cart - Indian Bar Snacks" class="w-full h-full object-cover aspect-[4/3]"></div>
+          <div class="p-8 lg:p-10">
+            <p class="text-gold font-medium tracking-[0.15em] uppercase text-xs mb-2">Luxury Chakhna Cart</p>
+            <h3 class="font-serif text-2xl lg:text-3xl font-bold text-charcoal mb-4">Chakhna Cart</h3>
+            <p class="text-gray-600 text-sm leading-relaxed mb-6">The ultimate cocktail hour upgrade. Designed specifically to pair with your bar service, offering premium roasted nuts, spicy nibbles, artisan crisps, and tangy dips.</p>
+            <div class="mb-6">
+              <p class="text-sm font-semibold text-charcoal mb-2">CHOICE OF CRUNCH</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Peri-Peri Roasted Cashews & Almonds</li>
+                <li>• Truffle & Herb Foxnuts (Makhana)</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">FRESH INGREDIENTS & NIBBLES</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Spicy Masala Peanuts</li>
+                <li>• Cheese Makhana & Corn Snacks</li>
+                <li>• Pickled Olives & Jalapeños</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">SIGNATURE DIPS & MIX-INS</p>
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li>• Mint-Yogurt Chutney</li>
+                <li>• Tangy Mango Salsa</li>
+                <li>• Spiced Lemon & Chaat Masala Sprinkle</li>
+              </ul>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+              <div>
+                <p class="text-lg font-bold text-gold">Starting at ₹15,000</p>
+                <p class="text-xs text-gray-500">for up to 100 pax | ₹25,000 for 200</p>
+              </div>
+              <a href="#" class="cart-enquire-btn inline-flex items-center gap-1.5 btn-gold px-5 py-2.5 rounded-full text-sm font-medium" data-cart-name="Chakhna Cart">Enquire</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ice Cream Cart -->
+      <div class="mb-16 bg-ivory rounded-2xl overflow-hidden shadow-sm reveal">
+        <div class="grid md:grid-cols-2 gap-0">
+          <div class="p-8 lg:p-10 order-2 md:order-1">
+            <p class="text-gold font-medium tracking-[0.15em] uppercase text-xs mb-2">Luxury Ice Cream Cart</p>
+            <h3 class="font-serif text-2xl lg:text-3xl font-bold text-charcoal mb-4">Ice Cream Cart</h3>
+            <p class="text-gray-600 text-sm leading-relaxed mb-6">Keep your guests cool with a gourmet, small-batch ice cream experience. Rich, handcrafted gelato and artisanal ice creams served in waffle cones or glass coupes.</p>
+            <div class="mb-6">
+              <p class="text-sm font-semibold text-charcoal mb-2">CHOICE OF FLAVORS</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Belgian Dark Chocolate & Madagascar Vanilla</li>
+                <li>• Pistachio Gelato & Alphonso Mango Sorbet</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">FRESH INGREDIENTS</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Fresh Strawberries & Mango Cubes</li>
+                <li>• Crushed Waffle Cones & Cookie Crumbs</li>
+                <li>• Toasted Almonds & Pistachios</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">SIGNATURE TOPPINGS</p>
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li>• Warm Fudge & Salted Caramel Sauce</li>
+                <li>• Rainbow Sprinkles & Maraschino Cherries</li>
+                <li>• Whipped Cream</li>
+              </ul>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+              <div>
+                <p class="text-lg font-bold text-gold">Starting at ₹15,000</p>
+                <p class="text-xs text-gray-500">for up to 100 pax | ₹25,000 for 200</p>
+              </div>
+              <a href="#" class="cart-enquire-btn inline-flex items-center gap-1.5 btn-gold px-5 py-2.5 rounded-full text-sm font-medium" data-cart-name="Ice Cream Cart">Enquire</a>
+            </div>
+          </div>
+          <div class="overflow-hidden order-1 md:order-2"><img src="https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=800&q=80" alt="Luxury Ice Cream Cart - Gelato" class="w-full h-full object-cover aspect-[4/3]"></div>
+        </div>
+      </div>
+
+      <!-- Mithai Cart -->
+      <div class="mb-16 bg-ivory rounded-2xl overflow-hidden shadow-sm reveal">
+        <div class="grid md:grid-cols-2 gap-0">
+          <div class="overflow-hidden"><img src="https://images.unsplash.com/photo-1669206033036-5c9e8e48b8ff?w=800&q=80" alt="Luxury Mithai Cart - Indian Sweets" class="w-full h-full object-cover aspect-[4/3]"></div>
+          <div class="p-8 lg:p-10">
+            <p class="text-gold font-medium tracking-[0.15em] uppercase text-xs mb-2">Luxury Mithai Cart</p>
+            <h3 class="font-serif text-2xl lg:text-3xl font-bold text-charcoal mb-4">Mithai Cart</h3>
+            <p class="text-gray-600 text-sm leading-relaxed mb-6">Reimagine traditional Indian sweets with modern, high-end presentation. Classic handcrafted sweetmeats with contemporary fusion twists on elegant brass and marble displays.</p>
+            <div class="mb-6">
+              <p class="text-sm font-semibold text-charcoal mb-2">CHOICE OF MITHAI</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Warm Mini Gulab Jamuns & Motichoor Laddoos</li>
+                <li>• Saffron Rasmalai Cups</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">FRESH INGREDIENTS</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Saffron-Infused Milk</li>
+                <li>• Crushed Pistachios & Almonds</li>
+                <li>• Fresh Rose Petals</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">SIGNATURE TOPPINGS</p>
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li>• 24k Edible Gold Leaf</li>
+                <li>• Silver Vark & Cardamom Dust</li>
+                <li>• Rabri Drizzle</li>
+              </ul>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+              <div>
+                <p class="text-lg font-bold text-gold">Starting at ₹15,000</p>
+                <p class="text-xs text-gray-500">for up to 100 pax | ₹25,000 for 200</p>
+              </div>
+              <a href="#" class="cart-enquire-btn inline-flex items-center gap-1.5 btn-gold px-5 py-2.5 rounded-full text-sm font-medium" data-cart-name="Mithai Cart">Enquire</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- South Indian Cart -->
+      <div class="mb-16 bg-ivory rounded-2xl overflow-hidden shadow-sm reveal">
+        <div class="grid md:grid-cols-2 gap-0">
+          <div class="p-8 lg:p-10 order-2 md:order-1">
+            <p class="text-gold font-medium tracking-[0.15em] uppercase text-xs mb-2">Luxury South Indian Cart</p>
+            <h3 class="font-serif text-2xl lg:text-3xl font-bold text-charcoal mb-4">South Indian Cart</h3>
+            <p class="text-gray-600 text-sm leading-relaxed mb-6">Bring the comforting, vibrant flavors of coastal South India to your venue. Crisp live-made dosas, mini button idlis, and piping-hot vadais with fresh coconut chutneys.</p>
+            <div class="mb-6">
+              <p class="text-sm font-semibold text-charcoal mb-2">CHOICE OF BASE</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Mini Mysore Masala Dosas</li>
+                <li>• Steamed Button Idlis & Medu Vadas</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">FRESH INGREDIENTS</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Tempered Mustard & Curry Leaves</li>
+                <li>• Spiced Potato Masala</li>
+                <li>• Gunpowder (Podi) & Desi Ghee</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">SIGNATURE CHUTNEYS</p>
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li>• Fresh Coconut Chutney</li>
+                <li>• Tangy Tomato-Garlic Chutney</li>
+                <li>• Spicy Mint-Coriander Chutney</li>
+              </ul>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+              <div>
+                <p class="text-lg font-bold text-gold">Starting at ₹15,000</p>
+                <p class="text-xs text-gray-500">for up to 100 pax | ₹25,000 for 200</p>
+              </div>
+              <a href="#" class="cart-enquire-btn inline-flex items-center gap-1.5 btn-gold px-5 py-2.5 rounded-full text-sm font-medium" data-cart-name="South Indian Cart">Enquire</a>
+            </div>
+          </div>
+          <div class="overflow-hidden order-1 md:order-2"><img src="https://images.unsplash.com/photo-1743615467204-8fdaa85ff2db?w=800&q=80" alt="Luxury South Indian Cart - Dosa" class="w-full h-full object-cover aspect-[4/3]"></div>
+        </div>
+      </div>
+
+      <!-- Chinese Cart -->
+      <div class="mb-16 bg-ivory rounded-2xl overflow-hidden shadow-sm reveal">
+        <div class="grid md:grid-cols-2 gap-0">
+          <div class="overflow-hidden"><img src="https://images.unsplash.com/photo-1750174558327-e13e0941f3a7?w=800&q=80" alt="Luxury Chinese Cart - Indo-Chinese Noodles" class="w-full h-full object-cover aspect-[4/3]"></div>
+          <div class="p-8 lg:p-10">
+            <p class="text-gold font-medium tracking-[0.15em] uppercase text-xs mb-2">Luxury Chinese Cart</p>
+            <h3 class="font-serif text-2xl lg:text-3xl font-bold text-charcoal mb-4">Chinese Cart</h3>
+            <p class="text-gray-600 text-sm leading-relaxed mb-6">Capture the high-energy sizzle of live wok cooking. Freshly tossed Indo-Chinese favorites served piping hot in chic takeaway boxes for an energetic interactive meal.</p>
+            <div class="mb-6">
+              <p class="text-sm font-semibold text-charcoal mb-2">CHOICE OF BASE</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Vegetable Hakka Noodles</li>
+                <li>• Fried Rice with Garden Veggies</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">FRESH INGREDIENTS</p>
+              <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                <li>• Crisp Bell Peppers & Bok Choy</li>
+                <li>• Spring Onions & Broccoli</li>
+                <li>• Crispy Garlic & Green Chilies</li>
+              </ul>
+              <p class="text-sm font-semibold text-charcoal mb-2">SIGNATURE MAINS & SAUCES</p>
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li>• Chili Paneer / Manchurian</li>
+                <li>• Schezwan Sauce Drizzle</li>
+                <li>• Tangy Soy-Garlic Glaze</li>
+              </ul>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+              <div>
+                <p class="text-lg font-bold text-gold">Starting at ₹15,000</p>
+                <p class="text-xs text-gray-500">for up to 100 pax | ₹25,000 for 200</p>
+              </div>
+              <a href="#" class="cart-enquire-btn inline-flex items-center gap-1.5 btn-gold px-5 py-2.5 rounded-full text-sm font-medium" data-cart-name="Chinese Cart">Enquire</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================
+       SECTION 5: OCCASIONS WE COVER
+       ============================================ -->
+  <section id="occasions" class="bg-ivory">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <p class="text-gold font-medium tracking-[0.15em] uppercase text-sm mb-3">Where We Serve</p>
+        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal mb-6">Occasions We Cover</h2>
+        <div class="gold-divider mx-auto"></div>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 text-center">
+        <div class="reveal reveal-delay-1 occasion-icon">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gold/10 flex items-center justify-center"><svg class="w-8 h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg></div>
+          <h3 class="font-serif text-lg font-semibold text-charcoal">Weddings &amp; Sangeet</h3>
+        </div>
+        <div class="reveal reveal-delay-2 occasion-icon">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gold/10 flex items-center justify-center"><svg class="w-8 h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg></div>
+          <h3 class="font-serif text-lg font-semibold text-charcoal">Corporate Events</h3>
+        </div>
+        <div class="reveal reveal-delay-3 occasion-icon">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gold/10 flex items-center justify-center"><svg class="w-8 h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/></svg></div>
+          <h3 class="font-serif text-lg font-semibold text-charcoal">Birthday Parties</h3>
+        </div>
+        <div class="reveal reveal-delay-4 occasion-icon">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gold/10 flex items-center justify-center"><svg class="w-8 h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg></div>
+          <h3 class="font-serif text-lg font-semibold text-charcoal">Society Events</h3>
+        </div>
+        <div class="reveal reveal-delay-4 occasion-icon">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gold/10 flex items-center justify-center"><svg class="w-8 h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg></div>
+          <h3 class="font-serif text-lg font-semibold text-charcoal">College Fests</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================
+       SECTION 6: WHY CHOOSE US
+       ============================================ -->
+  <section id="why-us" class="bg-charcoal text-ivory">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <p class="text-gold font-medium tracking-[0.15em] uppercase text-sm mb-3">Why Us</p>
+        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">Why Choose THE CART &amp; CULINARY CO.</h2>
+        <div class="gold-divider mx-auto"></div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-10 lg:gap-16 max-w-4xl mx-auto">
+        <div class="flex gap-5 reveal reveal-delay-1">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gold/15 flex items-center justify-center"><svg class="w-6 h-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div>
+          <div><h3 class="font-serif text-xl font-semibold text-white mb-2">Registered &amp; Professionally Run</h3><p class="text-gray-400 leading-relaxed">Not a home-based vendor. A registered Private Limited company with the infrastructure to deliver.</p></div>
+        </div>
+        <div class="flex gap-5 reveal reveal-delay-2">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gold/15 flex items-center justify-center"><svg class="w-6 h-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg></div>
+          <div><h3 class="font-serif text-xl font-semibold text-white mb-2">One Point of Contact</h3><p class="text-gray-400 leading-relaxed">No chasing multiple vendors. We handle everything — curated, styled, staffed, and delivered.</p></div>
+        </div>
+        <div class="flex gap-5 reveal reveal-delay-3">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gold/15 flex items-center justify-center"><svg class="w-6 h-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></div>
+          <div><h3 class="font-serif text-xl font-semibold text-white mb-2">Fully Customisable</h3><p class="text-gray-400 leading-relaxed">Menus, guest counts, setups — everything tailored to your event. No fixed packages.</p></div>
+        </div>
+        <div class="flex gap-5 reveal reveal-delay-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gold/15 flex items-center justify-center"><svg class="w-6 h-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7"/></svg></div>
+          <div><h3 class="font-serif text-xl font-semibold text-white mb-2">Trained Staff &amp; Hygiene</h3><p class="text-gray-400 leading-relaxed">Professional, uniformed staff. Hygienic setup. On-time execution — guaranteed.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================
+       SECTION 7: GALLERY
+       ============================================ -->
+  <section id="gallery" class="bg-ivory">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <p class="text-gold font-medium tracking-[0.15em] uppercase text-sm mb-3">Our Work</p>
+        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal mb-6">Event Gallery</h2>
+        <div class="gold-divider mx-auto mb-6"></div>
+        <p class="text-gray-600">A glimpse of the experiences we've curated.</p>
+      </div>
+      <!-- UPDATE: Replace placeholder divs with actual images -->
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div class="gallery-item rounded-lg overflow-hidden aspect-square reveal reveal-delay-1"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&q=80" alt="Wedding food cart setup" class="w-full h-full object-cover"></div>
+        <div class="gallery-item rounded-lg overflow-hidden aspect-square reveal reveal-delay-2">          <img src="https://images.unsplash.com/photo-1567337710282-00832b415979?w=400&q=80" alt="Gourmet food presentation" class="w-full h-full object-cover"></div>
+        <div class="gallery-item rounded-lg overflow-hidden aspect-square reveal reveal-delay-3">          <img src="https://images.unsplash.com/photo-1596797038530-2c107229654b?w=400&q=80" alt="Premium dining experience" class="w-full h-full object-cover"></div>
+        <div class="gallery-item rounded-lg overflow-hidden aspect-square reveal reveal-delay-4"><img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=400&q=80" alt="Live cooking station" class="w-full h-full object-cover"></div>
+        <div class="gallery-item rounded-lg overflow-hidden aspect-square reveal reveal-delay-1"><img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=400&q=80" alt="Indian dessert display" class="w-full h-full object-cover"></div>
+        <div class="gallery-item rounded-lg overflow-hidden aspect-square reveal reveal-delay-2"><img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&q=80" alt="Beverage station setup" class="w-full h-full object-cover"></div>
+        <div class="gallery-item rounded-lg overflow-hidden aspect-square reveal reveal-delay-3">          <img src="https://images.unsplash.com/photo-1631515242808-497c3b3616a2?w=400&q=80" alt="Colourful food spread" class="w-full h-full object-cover"></div>
+        <div class="gallery-item rounded-lg overflow-hidden aspect-square reveal reveal-delay-4">          <img src="https://images.unsplash.com/photo-1567337710282-00832b415979?w=400&q=80" alt="Event catering arrangement" class="w-full h-full object-cover"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================
+       SECTION 8: TESTIMONIALS
+       ============================================ -->
+  <section id="testimonials" class="bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <p class="text-gold font-medium tracking-[0.15em] uppercase text-sm mb-3">What Clients Say</p>
+        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal mb-6">Trusted by Hosts</h2>
+        <div class="gold-divider mx-auto"></div>
+      </div>
+      <!-- UPDATE: Replace with real client feedback -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="testimonial-card bg-ivory p-8 rounded-xl reveal reveal-delay-1">
+          <p class="text-gray-700 leading-relaxed mb-6 italic">"The cart setup at our wedding was the highlight of the evening. Guests couldn't stop talking about the chaat and dessert stations. Absolutely seamless."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center"><span class="text-gold font-serif font-bold text-sm">R</span></div>
+            <div><p class="font-medium text-charcoal text-sm">Riya &amp; Arjun</p><p class="text-gray-500 text-xs">Wedding, Delhi NCR</p></div>
+          </div>
+        </div>
+        <div class="testimonial-card bg-ivory p-8 rounded-xl reveal reveal-delay-2">
+          <p class="text-gray-700 leading-relaxed mb-6 italic">"We booked multiple carts for our company's annual party. The team was professional, the food was incredible, and everything was delivered on time."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center"><span class="text-gold font-serif font-bold text-sm">V</span></div>
+            <div><p class="font-medium text-charcoal text-sm">Vikram Mehta</p><p class="text-gray-500 text-xs">Corporate Event, Meerut</p></div>
+          </div>
+        </div>
+        <div class="testimonial-card bg-ivory p-8 rounded-xl reveal reveal-delay-3">
+          <p class="text-gray-700 leading-relaxed mb-6 italic">"From the first call to the last guest leaving, everything was handled beautifully. The dessert cart was an absolute showstopper."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center"><span class="text-gold font-serif font-bold text-sm">P</span></div>
+            <div><p class="font-medium text-charcoal text-sm">Priya Sharma</p><p class="text-gray-500 text-xs">Birthday Party, Aligarh</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================
+       SECTION 9: CONTACT / LEAD FORM
+       ============================================ -->
+  <section id="contact" class="bg-ivory">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <p class="text-gold font-medium tracking-[0.15em] uppercase text-sm mb-3">Get in Touch</p>
+        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal mb-6">Plan Your Event</h2>
+        <div class="gold-divider mx-auto mb-6"></div>
+        <p class="text-gray-600 max-w-xl mx-auto">Tell us about your event and we'll get back with a customised quote — or reach out directly on WhatsApp for an instant response.</p>
+      </div>
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-20">
+        <div class="reveal">
+          <form id="contactForm" class="space-y-5">
+            <div><label for="formName" class="block text-sm font-medium text-charcoal mb-1.5">Your Name *</label><input type="text" id="formName" name="name" required class="form-input w-full px-4 py-3 rounded-lg bg-white text-charcoal" placeholder="Full name"></div>
+            <div><label for="formPhone" class="block text-sm font-medium text-charcoal mb-1.5">Phone / WhatsApp Number *</label><input type="tel" id="formPhone" name="phone" required class="form-input w-full px-4 py-3 rounded-lg bg-white text-charcoal" placeholder="+91 99100 00122"></div>
+            <div><label for="formCity" class="block text-sm font-medium text-charcoal mb-1.5">City *</label><input type="text" id="formCity" name="city" required class="form-input w-full px-4 py-3 rounded-lg bg-white text-charcoal" placeholder="e.g. Delhi NCR"></div>
+            <div class="grid grid-cols-2 gap-4">
+              <div><label for="formDate" class="block text-sm font-medium text-charcoal mb-1.5">Event Date</label><input type="date" id="formDate" name="date" class="form-input w-full px-4 py-3 rounded-lg bg-white text-charcoal"></div>
+              <div><label for="formGuests" class="block text-sm font-medium text-charcoal mb-1.5">Guest Count</label><input type="number" id="formGuests" name="guests" min="1" class="form-input w-full px-4 py-3 rounded-lg bg-white text-charcoal" placeholder="e.g. 200"></div>
+            </div>
+            <div><label for="formOccasion" class="block text-sm font-medium text-charcoal mb-1.5">Occasion Type *</label><select id="formOccasion" name="occasion" required class="form-input w-full px-4 py-3 rounded-lg bg-white text-charcoal"><option value="">Select occasion</option><option value="Wedding">Wedding</option><option value="Corporate">Corporate Event</option><option value="Birthday">Birthday / Kitty Party</option><option value="Society Event">Society / Residential Event</option><option value="Other">Other</option></select></div>
+            <div><label for="formMessage" class="block text-sm font-medium text-charcoal mb-1.5">Message</label><textarea id="formMessage" name="message" rows="4" class="form-input w-full px-4 py-3 rounded-lg bg-white text-charcoal resize-none" placeholder="Tell us about your event, preferred carts, or any specific requirements..."></textarea></div>
+            <button type="submit" class="btn-gold w-full py-3.5 rounded-full text-base font-medium flex items-center justify-center gap-2">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Send Enquiry on WhatsApp
+            </button>
+          </form>
+        </div>
+        <div class="reveal reveal-delay-2 flex flex-col justify-center">
+          <div class="space-y-8">
+            <div>
+              <h3 class="font-serif text-2xl font-bold text-charcoal mb-4">Prefer to reach out directly?</h3>
+              <p class="text-gray-600 leading-relaxed">Drop us a WhatsApp message or give us a call. We typically respond within 30 minutes during business hours.</p>
+            </div>
+            <div class="space-y-4">
+              <!-- UPDATE: Replace 919910000122 with actual WhatsApp number -->
+              <a href="https://wa.me/919910000122?text=Hi%2C%20I%27m%20interested%20in%20The%20Cart%20%26%20Culinary%20Co.%20for%20my%20event." target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 p-4 bg-white rounded-xl hover:shadow-md transition-shadow group">
+                <div class="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0"><svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
+                <div><p class="font-medium text-charcoal group-hover:text-gold transition-colors">Chat on WhatsApp</p><p class="text-sm text-gray-500">Instant response during business hours</p></div>
+              </a>
+              <!-- UPDATE: Replace with actual phone number -->
+              <a href="tel:+919910000122" class="flex items-center gap-4 p-4 bg-white rounded-xl hover:shadow-md transition-shadow group">
+                <div class="w-12 h-12 rounded-full bg-gold/15 flex items-center justify-center flex-shrink-0"><svg class="w-6 h-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div>
+                <div><p class="font-medium text-charcoal group-hover:text-gold transition-colors">Call Us</p><p class="text-sm text-gray-500">+91 99100 00122</p></div>
+              </a>
+              <!-- UPDATE: Replace with actual email -->
+              <a href="mailto:hello@thecartco.in" class="flex items-center gap-4 p-4 bg-white rounded-xl hover:shadow-md transition-shadow group">
+                <div class="w-12 h-12 rounded-full bg-gold/15 flex items-center justify-center flex-shrink-0"><svg class="w-6 h-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+                <div><p class="font-medium text-charcoal group-hover:text-gold transition-colors">Email Us</p><p class="text-sm text-gray-500">hello@thecartco.in</p></div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================
+       SECTION 10: FOOTER
+       ============================================ -->
+  <footer class="bg-charcoal text-ivory pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+        <div>
+          <h3 class="font-serif text-2xl font-bold text-white mb-2">THE CART &amp; CULINARY CO.</h3>
+          <p class="text-gray-400 text-sm tracking-wide mb-4">Premium Cart Catering for Every Occasion</p>
+          <p class="text-gray-400 text-sm leading-relaxed"><!-- UPDATE: Replace with actual company address -->123 Business Tower, New Delhi, India</p>
+        </div>
+        <div>
+          <h4 class="font-serif text-lg font-semibold text-white mb-4">Quick Links</h4>
+          <ul class="space-y-2">
+            <li><a href="#about" class="text-gray-400 text-sm hover:text-gold transition-colors">About Us</a></li>
+            <li><a href="#carts" class="text-gray-400 text-sm hover:text-gold transition-colors">Our Carts</a></li>
+            <li><a href="#occasions" class="text-gray-400 text-sm hover:text-gold transition-colors">Occasions</a></li>
+            <li><a href="#gallery" class="text-gray-400 text-sm hover:text-gold transition-colors">Gallery</a></li>
+            <li><a href="#contact" class="text-gray-400 text-sm hover:text-gold transition-colors">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-serif text-lg font-semibold text-white mb-4">Contact Us</h4>
+          <ul class="space-y-2 text-gray-400 text-sm">
+            <li>Phone: +91 99100 00122</li>
+            <li>Email: hello@thecartco.in</li>
+            <!-- UPDATE: Replace with actual cities served -->
+            <li>Serving: Delhi NCR, Aligarh, Meerut, West UP</li>
+          </ul>
+          <div class="flex gap-4 mt-6">
+            <a href="#" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gold/30 transition-colors" aria-label="Instagram"><svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-gray-500 text-xs">&copy; 2026 The Cart &amp; Culinary Co. Pvt. Ltd. All rights reserved.</p>
+        <p class="text-gray-600 text-xs">Premium Cart Catering for Weddings &amp; Events</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ============================================
+       SECTION 11: STICKY WHATSAPP BUTTON
+       ============================================ -->
+  <!-- UPDATE: Replace 919910000122 with actual WhatsApp number -->
+  <a href="https://wa.me/919910000122?text=Hi%2C%20I%27m%20interested%20in%20The%20Cart%20%26%20Culinary%20Co.%20for%20my%20event." target="_blank" rel="noopener noreferrer" class="whatsapp-fab fixed bottom-6 right-6 z-50 w-14 h-14 bg-gold rounded-full flex items-center justify-center shadow-lg hover:bg-maroon transition-colors" aria-label="Chat on WhatsApp">
+    <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+
+  <!-- ============================================
+       GALLERY LIGHTBOX
+       ============================================ -->
+  <div id="lightbox" class="lightbox fixed inset-0 z-[60] bg-black/90 flex items-center justify-center">
+    <button id="lightboxClose" class="absolute top-4 right-4 text-white/80 hover:text-white transition-colors" aria-label="Close lightbox"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    <button id="lightboxPrev" class="absolute left-4 text-white/80 hover:text-white transition-colors" aria-label="Previous image"><svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg></button>
+    <img id="lightboxImg" src="" alt="" class="lightbox-image">
+    <button id="lightboxNext" class="absolute right-4 text-white/80 hover:text-white transition-colors" aria-label="Next image"><svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></button>
+  </div>
+
+
+  <!-- ============================================
+       JAVASCRIPT (Inlined)
+       ============================================ -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var hamburger = document.getElementById('hamburger');
+    var mobileNav = document.getElementById('mobileNav');
+    var mobileNavOverlay = document.getElementById('mobileNavOverlay');
+    var mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+    function openMobileNav() { mobileNav.classList.add('open'); mobileNavOverlay.classList.add('open'); document.body.style.overflow = 'hidden'; hamburger.setAttribute('aria-expanded', 'true'); }
+    function closeMobileNav() { mobileNav.classList.remove('open'); mobileNavOverlay.classList.remove('open'); document.body.style.overflow = ''; hamburger.setAttribute('aria-expanded', 'false'); }
+
+    if (hamburger) { hamburger.addEventListener('click', function () { mobileNav.classList.contains('open') ? closeMobileNav() : openMobileNav(); }); }
+    if (mobileNavOverlay) { mobileNavOverlay.addEventListener('click', closeMobileNav); }
+    mobileNavLinks.forEach(function (link) { link.addEventListener('click', closeMobileNav); });
+
+    var header = document.getElementById('siteHeader');
+    function handleHeaderScroll() { window.scrollY > 50 ? header.classList.add('header-scrolled') : header.classList.remove('header-scrolled'); }
+    window.addEventListener('scroll', handleHeaderScroll, { passive: true });
+    handleHeaderScroll();
+
+    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        var t = this.getAttribute('href');
+        if (t === '#') return;
+        var el = document.querySelector(t);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    var revealElements = document.querySelectorAll('.reveal');
+    function checkReveal() {
+      var h = window.innerHeight;
+      revealElements.forEach(function (el) { if (el.getBoundingClientRect().top < h - 120) el.classList.add('active'); });
+    }
+    window.addEventListener('scroll', checkReveal, { passive: true });
+    checkReveal();
+
+    var contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+      contactForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        // UPDATE: Replace with your actual WhatsApp number
+        var n = '919910000122';
+        var t = 'Hi, I\'m interested in The Cart & Culinary Co. for my event.\n\n';
+        t += '*Name:* ' + document.getElementById('formName').value.trim() + '\n';
+        var p = document.getElementById('formPhone').value.trim(); if (p) t += '*Phone:* ' + p + '\n';
+        var c = document.getElementById('formCity').value.trim(); if (c) t += '*City:* ' + c + '\n';
+        var d = document.getElementById('formDate').value.trim(); if (d) t += '*Event Date:* ' + d + '\n';
+        var o = document.getElementById('formOccasion').value; if (o) t += '*Occasion:* ' + o + '\n';
+        var g = document.getElementById('formGuests').value.trim(); if (g) t += '*Guest Count:* ' + g + '\n';
+        var m = document.getElementById('formMessage').value.trim(); if (m) t += '*Message:* ' + m;
+        window.open('https://wa.me/' + n + '?text=' + encodeURIComponent(t), '_blank');
+      });
+    }
+
+    var lightbox = document.getElementById('lightbox');
+    var lightboxImg = document.getElementById('lightboxImg');
+    var galleryImages = document.querySelectorAll('.gallery-img');
+    var idx = 0;
+    function openLB(i) { idx = i; lightboxImg.src = galleryImages[i].src; lightboxImg.alt = galleryImages[i].alt; lightbox.classList.add('active'); document.body.style.overflow = 'hidden'; }
+    function closeLB() { lightbox.classList.remove('active'); document.body.style.overflow = ''; }
+    function navLB(d) { idx += d; if (idx < 0) idx = galleryImages.length - 1; if (idx >= galleryImages.length) idx = 0; lightboxImg.src = galleryImages[idx].src; lightboxImg.alt = galleryImages[idx].alt; }
+    galleryImages.forEach(function (img, i) { img.addEventListener('click', function () { openLB(i); }); });
+    document.getElementById('lightboxClose').addEventListener('click', closeLB);
+    document.getElementById('lightboxPrev').addEventListener('click', function () { navLB(-1); });
+    document.getElementById('lightboxNext').addEventListener('click', function () { navLB(1); });
+    lightbox.addEventListener('click', function (e) { if (e.target === lightbox) closeLB(); });
+    document.addEventListener('keydown', function (e) {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape') closeLB();
+      if (e.key === 'ArrowLeft') navLB(-1);
+      if (e.key === 'ArrowRight') navLB(1);
+    });
+
+    // UPDATE: Replace with your actual WhatsApp number
+    var cwn = '919910000122';
+    document.querySelectorAll('.cart-enquire-btn').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        var cn = this.getAttribute('data-cart-name');
+        window.open('https://wa.me/' + cwn + '?text=' + encodeURIComponent('Hi, I\'m interested in the *' + cn + '* for my event. Can you share details?'), '_blank');
+      });
+    });
+  });
+  </script>
+
+</body>
+</html>
