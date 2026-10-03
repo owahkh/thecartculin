@@ -161,8 +161,14 @@
       }
       .bottom-nav a.active { color: #C9A24B; }
       .bottom-nav a svg { width: 22px; height: 22px; }
-      /* keep sticky WhatsApp button clear of the tab bar */
-      .whatsapp-fab { bottom: 84px; }
+      /* keep sticky WhatsApp button clear of the tab bar: bar is 65px tall
+         plus env(safe-area-inset-bottom), plus a 16px gap. !important because
+         the Tailwind CDN appends .bottom-6 after this block and equal
+         specificity would otherwise win on document order. */
+      .whatsapp-fab {
+        bottom: calc(65px + env(safe-area-inset-bottom, 0px) + 16px) !important;
+        z-index: 65 !important;
+      }
       /* clear the tab bar so footer content is never hidden behind it */
       body { padding-bottom: 68px; }
     }
@@ -324,7 +330,6 @@
           <div class="relative overflow-hidden aspect-[4/3] bg-royal/5">
             <img src="assets/images/chaat.jpg" alt="Luxury Chaat & Street Food Cart" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-royal/80 via-royal/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <span class="absolute top-3 left-3 bg-royal/90 text-ivory text-[10px] tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">Chaat Cart</span>
           </div>
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Chaat & Street Food Cart</h3>
@@ -337,7 +342,6 @@
           <div class="relative overflow-hidden aspect-[4/3] bg-royal/5">
             <img src="assets/images/kunafa.jpg" alt="Luxury Kunafa Cart - Middle Eastern Dessert" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-royal/80 via-royal/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <span class="absolute top-3 left-3 bg-royal/90 text-ivory text-[10px] tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">Kunafa Cart</span>
           </div>
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Kunafa Cart</h3>
@@ -350,7 +354,6 @@
           <div class="relative overflow-hidden aspect-[4/3] bg-royal/5">
             <img src="https://images.unsplash.com/photo-1755594492462-2907f15cb4b3?w=800&q=80" alt="Luxury Crepe Cart - French Crepes" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-royal/80 via-royal/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <span class="absolute top-3 left-3 bg-royal/90 text-ivory text-[10px] tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">Crepe Cart</span>
           </div>
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Crepe Cart</h3>
@@ -363,7 +366,6 @@
           <div class="relative overflow-hidden aspect-[4/3] bg-royal/5">
             <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=800&q=80" alt="Luxury Pancake Cart - Fluffy Pancakes" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-royal/80 via-royal/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <span class="absolute top-3 left-3 bg-royal/90 text-ivory text-[10px] tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">Pancake Cart</span>
           </div>
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Pancake Cart</h3>
@@ -376,7 +378,6 @@
           <div class="relative overflow-hidden aspect-[4/3] bg-royal/5">
             <img src="https://images.unsplash.com/photo-1754444217183-40cb409ad3d8?w=800&q=80" alt="Luxury Waffle Cart - Belgian Waffles" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-royal/80 via-royal/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <span class="absolute top-3 left-3 bg-royal/90 text-ivory text-[10px] tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">Waffle Cart</span>
           </div>
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Waffle Cart</h3>
@@ -389,7 +390,6 @@
           <div class="relative overflow-hidden aspect-[4/3] bg-royal/5">
             <img src="https://images.unsplash.com/photo-1647999019630-dabe1a837693?w=800&q=80" alt="Luxury Dumplings Cart - Delhi Momos" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-royal/80 via-royal/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <span class="absolute top-3 left-3 bg-royal/90 text-ivory text-[10px] tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">Dumplings Cart</span>
           </div>
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Delhi Dumplings Cart</h3>
@@ -402,7 +402,6 @@
           <div class="relative overflow-hidden aspect-[4/3] bg-royal/5">
             <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80" alt="Luxury Pizza Cart - Neapolitan Pizza" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-royal/80 via-royal/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <span class="absolute top-3 left-3 bg-royal/90 text-ivory text-[10px] tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">Pizza Cart</span>
           </div>
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Pizza Cart</h3>
@@ -415,7 +414,6 @@
           <div class="relative overflow-hidden aspect-[4/3] bg-royal/5">
             <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=800&q=80" alt="Luxury Pasta Cart - Italian Pasta" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-royal/80 via-royal/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <span class="absolute top-3 left-3 bg-royal/90 text-ivory text-[10px] tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">Pasta Cart</span>
           </div>
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Aakhri Pasta Cart</h3>
@@ -428,7 +426,6 @@
           <div class="relative overflow-hidden aspect-[4/3] bg-royal/5">
             <img src="assets/images/shawarma.jpeg" alt="Luxury Shawarma Cart - Middle Eastern Shawarma" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-royal/80 via-royal/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <span class="absolute top-3 left-3 bg-royal/90 text-ivory text-[10px] tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">Shawarma Cart</span>
           </div>
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Shawarma Cart</h3>
@@ -441,7 +438,6 @@
           <div class="relative overflow-hidden aspect-[4/3] bg-royal/5">
             <img src="assets/images/chakhna.jpg" alt="Luxury Chakhna Cart - Indian Bar Snacks" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-royal/80 via-royal/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <span class="absolute top-3 left-3 bg-royal/90 text-ivory text-[10px] tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">Chakhna Cart</span>
           </div>
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Chakhna Cart</h3>
@@ -454,7 +450,6 @@
           <div class="relative overflow-hidden aspect-[4/3] bg-royal/5">
             <img src="https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=800&q=80" alt="Luxury Ice Cream Cart - Gelato" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-royal/80 via-royal/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <span class="absolute top-3 left-3 bg-royal/90 text-ivory text-[10px] tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">Ice Cream Cart</span>
           </div>
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Ice Cream Cart</h3>
@@ -467,7 +462,6 @@
           <div class="relative overflow-hidden aspect-[4/3] bg-royal/5">
             <img src="assets/images/rasgulla.jpg" alt="Luxury Mithai Cart - Indian Sweets" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-royal/80 via-royal/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <span class="absolute top-3 left-3 bg-royal/90 text-ivory text-[10px] tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">Mithai Cart</span>
           </div>
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Mithai Cart</h3>
@@ -480,7 +474,6 @@
           <div class="relative overflow-hidden aspect-[4/3] bg-royal/5">
             <img src="https://images.unsplash.com/photo-1743615467204-8fdaa85ff2db?w=800&q=80" alt="Luxury South Indian Cart - Dosa" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-royal/80 via-royal/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <span class="absolute top-3 left-3 bg-royal/90 text-ivory text-[10px] tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">South Indian Cart</span>
           </div>
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">South Indian Cart</h3>
@@ -493,7 +486,6 @@
           <div class="relative overflow-hidden aspect-[4/3] bg-royal/5">
             <img src="https://images.unsplash.com/photo-1750174558327-e13e0941f3a7?w=800&q=80" alt="Luxury Chinese Cart - Indo-Chinese Noodles" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-royal/80 via-royal/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <span class="absolute top-3 left-3 bg-royal/90 text-ivory text-[10px] tracking-[0.15em] uppercase px-2.5 py-1 rounded-full">Chinese Cart</span>
           </div>
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Chinese Cart</h3>
@@ -685,10 +677,7 @@
                 <div><p class="font-medium text-royal group-hover:text-gold transition-colors">Call Us</p><p class="text-sm text-ash">+91 99100 00122</p></div>
               </a>
               <!-- UPDATE: Replace with actual email -->
-              <a href="mailto:hello@thecartco.in" class="flex items-center gap-4 p-4 bg-white rounded-xl hover:shadow-md transition-shadow group">
-                <div class="w-12 h-12 rounded-full bg-gold/15 flex items-center justify-center flex-shrink-0"><svg class="w-6 h-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
-                <div><p class="font-medium text-royal group-hover:text-gold transition-colors">Email Us</p><p class="text-sm text-ash">hello@thecartco.in</p></div>
-              </a>
+
             </div>
           </div>
         </div>
@@ -706,7 +695,7 @@
         <div>
           <h3 class="font-serif text-2xl font-bold text-white mb-2">THE CART &amp; CULINARY CO.</h3>
           <p class="text-ivory/70 text-sm tracking-wide mb-4">Premium Cart Catering for Every Occasion</p>
-          <p class="text-ivory/70 text-sm leading-relaxed"><!-- UPDATE: Replace with actual company address -->123 Business Tower, New Delhi, India</p>
+
         </div>
         <div>
           <h4 class="font-serif text-lg font-semibold text-white mb-4">Quick Links</h4>
@@ -722,7 +711,7 @@
           <h4 class="font-serif text-lg font-semibold text-white mb-4">Contact Us</h4>
           <ul class="space-y-2 text-ivory/70 text-sm">
             <li>Phone: +91 99100 00122</li>
-            <li>Email: hello@thecartco.in</li>
+            <li>Web: <a href="https://thecartculin.com" target="_blank" rel="noopener noreferrer" class="text-ivory/70 text-sm hover:text-gold transition-colors">thecartculin.com</a></li>
             <!-- UPDATE: Replace with actual cities served -->
             <li>Serving: Delhi NCR, Aligarh, Meerut, West UP</li>
           </ul>
