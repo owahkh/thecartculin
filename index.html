@@ -15,47 +15,13 @@
   <meta name="twitter:description" content="Premium cart catering for weddings, corporate events, and private parties.">
   <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            /* ---- Royal / Elite Palette ---- */
-            royal:    '#1B1033',  /* deep imperial purple-black */
-            'royal-800': '#241845',
-            'royal-700': '#33215C',
-            plum:     '#4A1942',  /* rich plum */
-            maroon:   '#640017',  /* accent burgundy */
-            gold:     '#C9A24B',  /* metallic gold */
-            'gold-light': '#E3C77B',
-            'gold-dark': '#A67C2E',
-            ivory:    '#F7F2E4',  /* warm ivory */
-            cream:    '#FCF9F1',
-            pearl:    '#FFFFFF',
-            ash:      '#6B6480',  /* muted body text */
-          },
-          fontFamily: {
-            serif: ['Playfair Display', 'serif'],
-            sans: ['Inter', 'sans-serif'],
-          },
-          boxShadow: {
-            royal: '0 18px 40px -18px rgba(27,16,51,0.45)',
-            'royal-lg': '0 30px 70px -25px rgba(27,16,51,0.55)',
-          },
-          letterSpacing: {
-            luxe: '0.22em',
-          }
-        }
-      }
-    }
-  </script>
-
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind (compiled from tailwind.config.js; run `npm run build:css`) -->
+  <link rel="stylesheet" href="assets/css/tailwind.css">
 
   <!-- Project Stylesheet (modal transitions, tiles, gallery) -->
   <link rel="stylesheet" href="assets/css/style.css">
@@ -256,8 +222,8 @@
   <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
     <div class="absolute inset-0">
       <picture>
-        <source media="(max-width: 767px)" srcset="https://images.unsplash.com/photo-1759726982020-2801e5bf67da?w=900&h=1400&q=80&fit=crop">
-        <img src="https://images.unsplash.com/photo-1759726982020-2801e5bf67da?w=1920&q=80" alt="Elegant catering cart set up at an event" class="w-full h-full object-cover">
+        <source media="(max-width: 767px)" srcset="https://images.unsplash.com/photo-1780586383003-7a8bb9375ae9?w=900&h=1400&q=80&fit=crop">
+        <img src="https://images.unsplash.com/photo-1780586383003-7a8bb9375ae9?w=1920&q=80" alt="Wedding reception dessert table with a white cake and assorted pastries" class="w-full h-full object-cover">
       </picture>
     </div>
     <div class="hero-overlay absolute inset-0"></div>

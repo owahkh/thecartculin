@@ -1,0 +1,15 @@
+{
+  "name": "thecartculin",
+  "version": "1.0.0",
+  "private": true,
+  "description": "The Cart & Culinary Co. — luxury cart catering. Static site on GitHub Pages.",
+  "license": "UNLICENSED",
+  "scripts": {
+    "build:css": "tailwindcss -i ./assets/css/tailwind.src.css -o ./assets/css/tailwind.css --minify",
+    "watch:css": "tailwindcss -i ./assets/css/tailwind.src.css -o ./assets/css/tailwind.css --watch",
+    "build": "npm run build:css"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
+  }
+}
