@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var message = document.getElementById('formMessage').value.trim();
 
       // UPDATE: Replace with your actual WhatsApp number
-      var whatsappNumber = '919910000122';
+      var whatsappNumber = '919312431445';
 
       var text = 'Hi, I\'m interested in The Cart & Culinary Co. for my event.\n\n';
       text += '*Name:* ' + name + '\n';
@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // ---- Auto-enquiry WhatsApp links for cart cards ----
   // UPDATE: Replace with your actual WhatsApp number
-  var cartWhatsappNumber = '919910000122';
+  var cartWhatsappNumber = '919312431445';
 
   // ---- Cart detail data (loaded into modal on tile click) ----
   var cartData = {
