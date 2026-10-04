@@ -4,6 +4,49 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
+  // ---- Scroll lock ----
+  // The off-canvas nav, the lightbox and the cart modal each want to pin the
+  // body. Clearing body.overflow in any one of them used to unlock the page
+  // while another was still open, so track them with a counter.
+  var scrollLocks = 0;
+
+  function lockScroll() {
+    scrollLocks++;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function unlockScroll() {
+    scrollLocks = Math.max(0, scrollLocks - 1);
+    if (scrollLocks === 0) document.body.style.overflow = '';
+  }
+
+  // ---- Focus trap ----
+  // The modal is marked aria-modal="true" but nothing stopped Tab from walking
+  // through the page behind it. Trap within `container` and restore focus to
+  // whatever opened it on close.
+  var FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+  function trapFocus(container, event) {
+    if (event.key !== 'Tab') return;
+    var nodes = Array.prototype.filter.call(
+      container.querySelectorAll(FOCUSABLE),
+      function (el) { return el.offsetParent !== null; }
+    );
+    if (!nodes.length) return;
+    var first = nodes[0];
+    var last = nodes[nodes.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    } else if (!container.contains(document.activeElement)) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+
   // ---- Mobile Navigation Toggle ----
   const hamburger = document.getElementById('hamburger');
   const mobileNav = document.getElementById('mobileNav');
@@ -13,15 +56,22 @@ document.addEventListener('DOMContentLoaded', function () {
   function openMobileNav() {
     mobileNav.classList.add('open');
     mobileNavOverlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
+    // hides the WhatsApp FAB, which shares the drawer's right-hand edge
+    document.body.classList.add('nav-open');
+    lockScroll();
     hamburger.setAttribute('aria-expanded', 'true');
+    var firstLink = mobileNav.querySelector(FOCUSABLE);
+    if (firstLink) firstLink.focus();
   }
 
   function closeMobileNav() {
+    if (!mobileNav.classList.contains('open')) return;
     mobileNav.classList.remove('open');
     mobileNavOverlay.classList.remove('open');
-    document.body.style.overflow = '';
+    document.body.classList.remove('nav-open');
+    unlockScroll();
     hamburger.setAttribute('aria-expanded', 'false');
+    hamburger.focus();
   }
 
   if (hamburger) {
@@ -123,33 +173,56 @@ document.addEventListener('DOMContentLoaded', function () {
   var lightboxClose = document.getElementById('lightboxClose');
   var lightboxPrev = document.getElementById('lightboxPrev');
   var lightboxNext = document.getElementById('lightboxNext');
-  var galleryImages = document.querySelectorAll('.gallery-img');
+  var galleryItems = document.querySelectorAll('.gallery-item');
   var currentImageIndex = 0;
+  var lightboxOpener = null;
 
-  function openLightbox(index) {
+  function gallerySource(item) {
+    var img = item.querySelector('img');
+    if (!img) return '';
+    // data-full is the hi-res copy; the grid thumbnail is only w=400 and looked
+    // soft when blown up to 85vh
+    return img.getAttribute('data-full') || img.src;
+  }
+
+  function galleryAlt(item) {
+    var img = item.querySelector('img');
+    return img ? img.alt : '';
+  }
+
+  function showImage(index) {
+    var item = galleryItems[index];
+    lightboxImg.src = gallerySource(item);
+    lightboxImg.alt = galleryAlt(item);
+  }
+
+  function openLightbox(index, opener) {
     currentImageIndex = index;
-    lightboxImg.src = galleryImages[index].src;
-    lightboxImg.alt = galleryImages[index].alt;
+    lightboxOpener = opener || null;
+    showImage(index);
     lightbox.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    lockScroll();
+    lightboxClose.focus();
   }
 
   function closeLightbox() {
     lightbox.classList.remove('active');
-    document.body.style.overflow = '';
+    unlockScroll();
+    if (lightboxOpener) lightboxOpener.focus();
+    lightboxOpener = null;
   }
 
   function navigateLightbox(direction) {
     currentImageIndex += direction;
-    if (currentImageIndex < 0) currentImageIndex = galleryImages.length - 1;
-    if (currentImageIndex >= galleryImages.length) currentImageIndex = 0;
-    lightboxImg.src = galleryImages[currentImageIndex].src;
-    lightboxImg.alt = galleryImages[currentImageIndex].alt;
+    if (currentImageIndex < 0) currentImageIndex = galleryItems.length - 1;
+    if (currentImageIndex >= galleryItems.length) currentImageIndex = 0;
+    showImage(currentImageIndex);
   }
 
-  galleryImages.forEach(function (img, index) {
-    img.addEventListener('click', function () {
-      openLightbox(index);
+  // The tiles are real <button>s, so Enter/Space arrive here as a normal click
+  galleryItems.forEach(function (item, index) {
+    item.addEventListener('click', function () {
+      openLightbox(index, item);
     });
   });
 
@@ -176,10 +249,16 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   document.addEventListener('keydown', function (e) {
+    // Escape closes the drawer first when it is open
+    if (e.key === 'Escape' && mobileNav.classList.contains('open')) {
+      closeMobileNav();
+      return;
+    }
     if (!lightbox || !lightbox.classList.contains('active')) return;
     if (e.key === 'Escape') closeLightbox();
     if (e.key === 'ArrowLeft') navigateLightbox(-1);
     if (e.key === 'ArrowRight') navigateLightbox(1);
+    trapFocus(lightbox, e);
   });
 
   // ---- Auto-enquiry WhatsApp links for cart cards ----
@@ -397,6 +476,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var cartModalPrice = document.getElementById('cartModalPrice');
   var cartModalPricenote = document.getElementById('cartModalPricenote');
   var cartModalEnquire = document.getElementById('cartModalEnquire');
+  var cartModalOpener = null;
 
   function escapeHtml(str) {
     return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -416,8 +496,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var sectionsHtml = '';
     data.sections.forEach(function (section) {
-      sectionsHtml += '<p class="text-sm font-semibold text-charcoal mb-2 mt-5 first:mt-0">' + escapeHtml(section.heading) + '</p>';
-      sectionsHtml += '<ul class="text-sm text-gray-600 space-y-1">';
+      // text-charcoal was never defined in tailwind.config.js, so these
+      // headings silently inherited body colour instead. text-ash matches the
+      // muted tone used everywhere else in the modal.
+      sectionsHtml += '<p class="text-sm font-semibold text-ash mb-2 mt-5 first:mt-0">' + escapeHtml(section.heading) + '</p>';
+      sectionsHtml += '<ul class="text-sm text-ash space-y-1">';
       section.items.forEach(function (item) {
         sectionsHtml += '<li>• ' + escapeHtml(item) + '</li>';
       });
@@ -427,24 +510,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     cartModal.classList.remove('hidden');
     cartModal.classList.add('flex', 'active');
-    document.body.style.overflow = 'hidden';
+    lockScroll();
+    cartModalOpener = document.activeElement;
+    cartModalClose.focus();
   }
 
   function closeCartModal() {
     if (!cartModal) return;
     cartModal.classList.add('hidden');
     cartModal.classList.remove('flex', 'active');
-    document.body.style.overflow = '';
+    unlockScroll();
+    if (cartModalOpener) cartModalOpener.focus();
+    cartModalOpener = null;
   }
 
+  // .cart-tile is a real <button>, so Enter and Space already fire click and
+  // reach openCartModal. The extra keydown listener only double-bound them.
   document.querySelectorAll('.cart-tile').forEach(function (tile) {
-    var open = function () { openCartModal(tile.getAttribute('data-cart-id')); };
-    tile.addEventListener('click', open);
-    tile.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        open();
-      }
+    tile.addEventListener('click', function () {
+      openCartModal(tile.getAttribute('data-cart-id'));
     });
   });
 
@@ -454,6 +538,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.addEventListener('keydown', function (e) {
     if (!cartModal || !cartModal.classList.contains('active')) return;
     if (e.key === 'Escape') closeCartModal();
+    trapFocus(cartModal, e);
   });
 
   document.querySelectorAll('.cart-enquire-btn').forEach(function (btn) {

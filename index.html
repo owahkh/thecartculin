@@ -10,9 +10,17 @@
   <meta property="og:title" content="THE CART & CULINARY CO. | Luxury Cart Catering for Weddings & Events">
   <meta property="og:description" content="Premium cart catering for weddings, corporate events, and private parties.">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://thecartculin.com/">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1780586383003-7a8bb9375ae9?w=1200&amp;h=630&amp;fit=crop&amp;q=80">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="The Cart &amp; Culinary Co.">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="THE CART & CULINARY CO. | Luxury Cart Catering for Weddings & Events">
+  <meta name="twitter:title" content="THE CART &amp; CULINARY CO. | Luxury Cart Catering for Weddings &amp; Events">
   <meta name="twitter:description" content="Premium cart catering for weddings, corporate events, and private parties.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1780586383003-7a8bb9375ae9?w=1200&amp;h=630&amp;fit=crop&amp;q=80">
+  <link rel="canonical" href="https://thecartculin.com/">
+  <meta name="theme-color" content="#1B1033">
   <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
 
   <!-- Google Fonts -->
@@ -28,7 +36,9 @@
 
   <style>
     /* ---- Base Reset & Typography ---- */
-    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    /* scroll-padding must clear the fixed header: 64px on mobile, 96px from sm up */
+    html { scroll-behavior: smooth; scroll-padding-top: 4rem; }
+    @media (min-width: 640px) { html { scroll-padding-top: 6rem; } }
     body { font-family: 'Inter', sans-serif; color: #1B1033; background-color: #FCF9F1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
     h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; }
 
@@ -129,15 +139,22 @@
       .bottom-nav a svg { width: 22px; height: 22px; }
       /* keep sticky WhatsApp button clear of the tab bar: bar is 65px tall
          plus env(safe-area-inset-bottom), plus a 16px gap. !important because
-         the Tailwind CDN appends .bottom-6 after this block and equal
-         specificity would otherwise win on document order. */
+         the compiled Tailwind utilities (bottom-6) are emitted after this block
+         and equal specificity would otherwise win on document order. */
       .whatsapp-fab {
         bottom: calc(65px + env(safe-area-inset-bottom, 0px) + 16px) !important;
         z-index: 65 !important;
       }
-      /* clear the tab bar so footer content is never hidden behind it */
-      body { padding-bottom: 68px; }
+      /* clear the tab bar so footer content is never hidden behind it. The bar is
+         65px + the home-indicator inset; the footer carries pb-8 (32px) of its
+         own, so this covers the remaining ~3px plus keeps the two in step. */
+      body { padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px)); }
     }
+
+    /* While the off-canvas drawer is open the WhatsApp FAB must not float over
+       it: the drawer occupies the same right-hand edge (both are fixed right).
+       main.js toggles .nav-open on <body>. */
+    body.nav-open .whatsapp-fab { opacity: 0; pointer-events: none; }
 
     /* ---- Responsive ---- */
     @media (max-width: 768px) { section { padding-top: 3.5rem; padding-bottom: 3.5rem; } .hero-headline { font-size: 2.25rem !important; line-height: 1.2 !important; } }
@@ -145,9 +162,23 @@
     /* ---- Stat Counter ---- */
     .stat-number { font-family: 'Playfair Display', serif; color: #C9A24B; }
 
+    /* ---- Cart Grid ----
+       14 tiles do not divide by 3 or 4, so a CSS grid leaves a half-empty final
+       row (at xl it was 576px of 1216px used, left aligned). Flex-wrap with an
+       explicit basis keeps every column exactly equal AND centres the leftover
+       tiles, so the tail row reads as deliberate at every breakpoint. */
+    .cart-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
+    .cart-grid > .cart-tile { flex: 0 0 100%; min-width: 0; max-width: 100%; }
+    @media (min-width: 640px)  { .cart-grid > .cart-tile { flex-basis: calc((100% - 1.5rem) / 2); } }
+    @media (min-width: 1024px) { .cart-grid { gap: 2rem; } .cart-grid > .cart-tile { flex-basis: calc((100% - 4rem) / 3); } }
+    @media (min-width: 1280px) { .cart-grid > .cart-tile { flex-basis: calc((100% - 6rem) / 4); } }
+
     /* ---- Cart Modal (paired with assets/css/style.css rules) ---- */
     .cart-tile { cursor: pointer; }
     .cart-tile:focus-visible { outline: 2px solid #C9A24B; outline-offset: 3px; }
+
+    /* ---- Gallery keyboard access ---- */
+    .gallery-item:focus-visible { outline: 2px solid #C9A24B; outline-offset: 3px; }
 
     /* ---- Royal Elite Utilities ---- */
     .eyebrow { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: #C9A24B; }
@@ -158,7 +189,27 @@
     ::-webkit-scrollbar-track { background: #EFE9DC; }
     ::-webkit-scrollbar-thumb { background: #C9A24B; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #A67C2E; }
+    html { scrollbar-color: #C9A24B #EFE9DC; scrollbar-width: thin; }
+
+    /* ---- Reduced Motion ----
+       Suppress the smooth scroll, the scroll-reveal slide/fade and the
+       infinite WhatsApp pulse for users who ask for less motion. The reveal
+       elements must land on their final state immediately, otherwise the
+       shortened transitions could leave them mid-fade. */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+    }
   </style>
+
+  <noscript>
+    <style>.reveal { opacity: 1 !important; transform: none !important; }</style>
+  </noscript>
 </head>
 
 <body class="bg-cream text-royal font-sans">
@@ -199,8 +250,11 @@
     </div>
   </header>
 
-  <div id="mobileNavOverlay" class="mobile-nav-overlay fixed inset-0 bg-black/40 z-40 md:hidden"></div>
-  <nav id="mobileNav" class="mobile-nav fixed top-0 right-0 w-72 h-full bg-cream z-50 md:hidden shadow-2xl">
+  <!-- Stacking order above the fixed chrome: overlay 65 < drawer 70 < cart modal 80.
+       The drawer used to sit at z-50, below the z-60 mobile tab bar, so the tab
+       bar painted on top of the open menu. -->
+  <div id="mobileNavOverlay" class="mobile-nav-overlay fixed inset-0 bg-black/40 z-[65] md:hidden"></div>
+  <nav id="mobileNav" class="mobile-nav fixed top-0 right-0 w-72 h-full bg-cream z-[70] md:hidden shadow-2xl">
     <div class="flex flex-col p-8 pt-24 gap-6">
       <a href="#home" class="mobile-nav-link text-lg font-medium text-royal hover:text-gold transition-colors">Home</a>
       <a href="#about" class="mobile-nav-link text-lg font-medium text-royal hover:text-gold transition-colors">About</a>
@@ -291,7 +345,7 @@
         <p class="text-ash max-w-2xl mx-auto text-lg">Each cart is a complete experience — curated, styled, staffed, and ready to serve your guests. Tap any cart to explore its full menu.</p>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
+      <div class="cart-grid">
         <button type="button" class="cart-tile group text-left bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 border border-royal/10 focus:outline-none reveal" data-cart-id="chaat" aria-label="View details for Chaat & Street Food Cart">
           <div class="relative overflow-hidden aspect-[4/3] bg-royal/5">
             <img src="assets/images/chaat.jpg" alt="Luxury Chaat & Street Food Cart" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
@@ -300,7 +354,7 @@
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Chaat & Street Food Cart</h3>
             <p class="text-gold text-sm font-medium mt-1">Starting at ₹15,000</p>
-            <p class="text-xs text-royal/50 mt-1">for up to 100 pax | ₹25,000 for 200</p>
+            <p class="text-ash text-xs mt-1">for up to 100 pax | ₹25,000 for 200</p>
             <span class="inline-flex items-center gap-1.5 mt-4 text-xs font-semibold tracking-[0.1em] uppercase text-gold group-hover:gap-2.5 transition-all">View Menu<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
           </div>
         </button>
@@ -312,7 +366,7 @@
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Kunafa Cart</h3>
             <p class="text-gold text-sm font-medium mt-1">Starting at ₹20,000</p>
-            <p class="text-xs text-royal/50 mt-1">for 50 Kunafa | ₹30,000 for 100</p>
+            <p class="text-ash text-xs mt-1">for 50 Kunafa | ₹30,000 for 100</p>
             <span class="inline-flex items-center gap-1.5 mt-4 text-xs font-semibold tracking-[0.1em] uppercase text-gold group-hover:gap-2.5 transition-all">View Menu<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
           </div>
         </button>
@@ -324,7 +378,7 @@
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Crepe Cart</h3>
             <p class="text-gold text-sm font-medium mt-1">Starting at ₹15,000</p>
-            <p class="text-xs text-royal/50 mt-1">for up to 100 pax | ₹25,000 for 200</p>
+            <p class="text-ash text-xs mt-1">for up to 100 pax | ₹25,000 for 200</p>
             <span class="inline-flex items-center gap-1.5 mt-4 text-xs font-semibold tracking-[0.1em] uppercase text-gold group-hover:gap-2.5 transition-all">View Menu<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
           </div>
         </button>
@@ -336,7 +390,7 @@
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Pancake Cart</h3>
             <p class="text-gold text-sm font-medium mt-1">Starting at ₹15,000</p>
-            <p class="text-xs text-royal/50 mt-1">for up to 100 pax | ₹25,000 for 200</p>
+            <p class="text-ash text-xs mt-1">for up to 100 pax | ₹25,000 for 200</p>
             <span class="inline-flex items-center gap-1.5 mt-4 text-xs font-semibold tracking-[0.1em] uppercase text-gold group-hover:gap-2.5 transition-all">View Menu<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
           </div>
         </button>
@@ -348,7 +402,7 @@
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Waffle Cart</h3>
             <p class="text-gold text-sm font-medium mt-1">Starting at ₹15,000</p>
-            <p class="text-xs text-royal/50 mt-1">for up to 100 pax | ₹25,000 for 200</p>
+            <p class="text-ash text-xs mt-1">for up to 100 pax | ₹25,000 for 200</p>
             <span class="inline-flex items-center gap-1.5 mt-4 text-xs font-semibold tracking-[0.1em] uppercase text-gold group-hover:gap-2.5 transition-all">View Menu<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
           </div>
         </button>
@@ -360,7 +414,7 @@
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Delhi Dumplings Cart</h3>
             <p class="text-gold text-sm font-medium mt-1">Starting at ₹15,000</p>
-            <p class="text-xs text-royal/50 mt-1">for up to 100 pax | ₹25,000 for 200</p>
+            <p class="text-ash text-xs mt-1">for up to 100 pax | ₹25,000 for 200</p>
             <span class="inline-flex items-center gap-1.5 mt-4 text-xs font-semibold tracking-[0.1em] uppercase text-gold group-hover:gap-2.5 transition-all">View Menu<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
           </div>
         </button>
@@ -372,7 +426,7 @@
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Pizza Cart</h3>
             <p class="text-gold text-sm font-medium mt-1">Starting at ₹15,000</p>
-            <p class="text-xs text-royal/50 mt-1">for up to 100 pax | ₹25,000 for 200</p>
+            <p class="text-ash text-xs mt-1">for up to 100 pax | ₹25,000 for 200</p>
             <span class="inline-flex items-center gap-1.5 mt-4 text-xs font-semibold tracking-[0.1em] uppercase text-gold group-hover:gap-2.5 transition-all">View Menu<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
           </div>
         </button>
@@ -384,7 +438,7 @@
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Aakhri Pasta Cart</h3>
             <p class="text-gold text-sm font-medium mt-1">Starting at ₹15,000</p>
-            <p class="text-xs text-royal/50 mt-1">for up to 100 pax | ₹25,000 for 200</p>
+            <p class="text-ash text-xs mt-1">for up to 100 pax | ₹25,000 for 200</p>
             <span class="inline-flex items-center gap-1.5 mt-4 text-xs font-semibold tracking-[0.1em] uppercase text-gold group-hover:gap-2.5 transition-all">View Menu<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
           </div>
         </button>
@@ -396,7 +450,7 @@
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Shawarma Cart</h3>
             <p class="text-gold text-sm font-medium mt-1">Starting at ₹15,000</p>
-            <p class="text-xs text-royal/50 mt-1">for up to 100 pax | ₹25,000 for 200</p>
+            <p class="text-ash text-xs mt-1">for up to 100 pax | ₹25,000 for 200</p>
             <span class="inline-flex items-center gap-1.5 mt-4 text-xs font-semibold tracking-[0.1em] uppercase text-gold group-hover:gap-2.5 transition-all">View Menu<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
           </div>
         </button>
@@ -408,7 +462,7 @@
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Chakhna Cart</h3>
             <p class="text-gold text-sm font-medium mt-1">Starting at ₹15,000</p>
-            <p class="text-xs text-royal/50 mt-1">for up to 100 pax | ₹25,000 for 200</p>
+            <p class="text-ash text-xs mt-1">for up to 100 pax | ₹25,000 for 200</p>
             <span class="inline-flex items-center gap-1.5 mt-4 text-xs font-semibold tracking-[0.1em] uppercase text-gold group-hover:gap-2.5 transition-all">View Menu<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
           </div>
         </button>
@@ -420,7 +474,7 @@
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Ice Cream Cart</h3>
             <p class="text-gold text-sm font-medium mt-1">Starting at ₹15,000</p>
-            <p class="text-xs text-royal/50 mt-1">for up to 100 pax | ₹25,000 for 200</p>
+            <p class="text-ash text-xs mt-1">for up to 100 pax | ₹25,000 for 200</p>
             <span class="inline-flex items-center gap-1.5 mt-4 text-xs font-semibold tracking-[0.1em] uppercase text-gold group-hover:gap-2.5 transition-all">View Menu<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
           </div>
         </button>
@@ -432,7 +486,7 @@
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Mithai Cart</h3>
             <p class="text-gold text-sm font-medium mt-1">Starting at ₹15,000</p>
-            <p class="text-xs text-royal/50 mt-1">for up to 100 pax | ₹25,000 for 200</p>
+            <p class="text-ash text-xs mt-1">for up to 100 pax | ₹25,000 for 200</p>
             <span class="inline-flex items-center gap-1.5 mt-4 text-xs font-semibold tracking-[0.1em] uppercase text-gold group-hover:gap-2.5 transition-all">View Menu<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
           </div>
         </button>
@@ -444,7 +498,7 @@
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">South Indian Cart</h3>
             <p class="text-gold text-sm font-medium mt-1">Starting at ₹15,000</p>
-            <p class="text-xs text-royal/50 mt-1">for up to 100 pax | ₹25,000 for 200</p>
+            <p class="text-ash text-xs mt-1">for up to 100 pax | ₹25,000 for 200</p>
             <span class="inline-flex items-center gap-1.5 mt-4 text-xs font-semibold tracking-[0.1em] uppercase text-gold group-hover:gap-2.5 transition-all">View Menu<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
           </div>
         </button>
@@ -456,7 +510,7 @@
           <div class="p-5">
             <h3 class="font-serif text-lg font-bold text-royal group-hover:text-gold transition-colors">Chinese Cart</h3>
             <p class="text-gold text-sm font-medium mt-1">Starting at ₹15,000</p>
-            <p class="text-xs text-royal/50 mt-1">for up to 100 pax | ₹25,000 for 200</p>
+            <p class="text-ash text-xs mt-1">for up to 100 pax | ₹25,000 for 200</p>
             <span class="inline-flex items-center gap-1.5 mt-4 text-xs font-semibold tracking-[0.1em] uppercase text-gold group-hover:gap-2.5 transition-all">View Menu<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
           </div>
         </button>
@@ -543,16 +597,20 @@
         <div class="gold-divider mx-auto mb-6"></div>
         <p class="text-ash">A glimpse of the experiences we've curated.</p>
       </div>
-      <!-- UPDATE: Replace placeholder divs with actual images -->
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        <div class="gallery-item rounded-lg overflow-hidden aspect-square reveal reveal-delay-1"><img class="gallery-img cursor-zoom-in" src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&q=80" alt="Wedding food cart setup" class="w-full h-full object-cover"></div>
-        <div class="gallery-item rounded-lg overflow-hidden aspect-square reveal reveal-delay-2">          <img class="gallery-img cursor-zoom-in" src="https://images.unsplash.com/photo-1567337710282-00832b415979?w=400&q=80" alt="Gourmet food presentation" class="w-full h-full object-cover"></div>
-        <div class="gallery-item rounded-lg overflow-hidden aspect-square reveal reveal-delay-3">          <img class="gallery-img cursor-zoom-in" src="https://images.unsplash.com/photo-1596797038530-2c107229654b?w=400&q=80" alt="Premium dining experience" class="w-full h-full object-cover"></div>
-        <div class="gallery-item rounded-lg overflow-hidden aspect-square reveal reveal-delay-4"><img class="gallery-img cursor-zoom-in" src="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=400&q=80" alt="Live cooking station" class="w-full h-full object-cover"></div>
-        <div class="gallery-item rounded-lg overflow-hidden aspect-square reveal reveal-delay-1"><img class="gallery-img cursor-zoom-in" src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=400&q=80" alt="Indian dessert display" class="w-full h-full object-cover"></div>
-        <div class="gallery-item rounded-lg overflow-hidden aspect-square reveal reveal-delay-2"><img class="gallery-img cursor-zoom-in" src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&q=80" alt="Beverage station setup" class="w-full h-full object-cover"></div>
-        <div class="gallery-item rounded-lg overflow-hidden aspect-square reveal reveal-delay-3">          <img class="gallery-img cursor-zoom-in" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80" alt="Colourful food spread" class="w-full h-full object-cover"></div>
-        <div class="gallery-item rounded-lg overflow-hidden aspect-square reveal reveal-delay-4">          <img class="gallery-img cursor-zoom-in" src="https://images.unsplash.com/photo-1567337710282-00832b415979?w=400&q=80" alt="Event catering arrangement" class="w-full h-full object-cover"></div>
+      <!-- 8 tiles: grid-cols-2 divides evenly (4 rows) and lg:grid-cols-4 divides
+           evenly (2 rows). The previous md:grid-cols-3 left a 2-tile final row
+           hugging the left edge between 768px and 1023px.
+           Each tile is a real <button> so the lightbox is reachable by keyboard;
+           data-full holds the hi-res source the lightbox loads. -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <button type="button" class="gallery-item rounded-lg overflow-hidden aspect-square reveal reveal-delay-1" aria-label="View larger image: Wedding food cart setup"><img class="gallery-img" data-full="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=1600&q=80" src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&q=80" alt="Wedding food cart setup" class="w-full h-full object-cover"></button>
+        <button type="button" class="gallery-item rounded-lg overflow-hidden aspect-square reveal reveal-delay-2" aria-label="View larger image: Gourmet food presentation"><img class="gallery-img" data-full="https://images.unsplash.com/photo-1567337710282-00832b415979?w=1600&q=80" src="https://images.unsplash.com/photo-1567337710282-00832b415979?w=400&q=80" alt="Gourmet food presentation" class="w-full h-full object-cover"></button>
+        <button type="button" class="gallery-item rounded-lg overflow-hidden aspect-square reveal reveal-delay-3" aria-label="View larger image: Premium dining experience"><img class="gallery-img" data-full="https://images.unsplash.com/photo-1596797038530-2c107229654b?w=1600&q=80" src="https://images.unsplash.com/photo-1596797038530-2c107229654b?w=400&q=80" alt="Premium dining experience" class="w-full h-full object-cover"></button>
+        <button type="button" class="gallery-item rounded-lg overflow-hidden aspect-square reveal reveal-delay-4" aria-label="View larger image: Live cooking station"><img class="gallery-img" data-full="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=1600&q=80" src="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=400&q=80" alt="Live cooking station" class="w-full h-full object-cover"></button>
+        <button type="button" class="gallery-item rounded-lg overflow-hidden aspect-square reveal reveal-delay-1" aria-label="View larger image: Indian dessert display"><img class="gallery-img" data-full="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=1600&q=80" src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=400&q=80" alt="Indian dessert display" class="w-full h-full object-cover"></button>
+        <button type="button" class="gallery-item rounded-lg overflow-hidden aspect-square reveal reveal-delay-2" aria-label="View larger image: Beverage station setup"><img class="gallery-img" data-full="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=1600&q=80" src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&q=80" alt="Beverage station setup" class="w-full h-full object-cover"></button>
+        <button type="button" class="gallery-item rounded-lg overflow-hidden aspect-square reveal reveal-delay-3" aria-label="View larger image: Colourful food spread"><img class="gallery-img" data-full="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=80" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80" alt="Colourful food spread" class="w-full h-full object-cover"></button>
+        <button type="button" class="gallery-item rounded-lg overflow-hidden aspect-square reveal reveal-delay-4" aria-label="View larger image: Live dessert counter"><img class="gallery-img" data-full="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=1600&q=80" src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=400&q=80" alt="Live dessert counter" class="w-full h-full object-cover"></button>
       </div>
     </div>
   </section>
@@ -676,19 +734,21 @@
         <div>
           <h4 class="font-serif text-lg font-semibold text-white mb-4">Contact Us</h4>
           <ul class="space-y-2 text-ivory/70 text-sm">
-            <li>Phone: +91 93124 31445</li>
+            <li>Phone: <a href="tel:+919312431445" class="hover:text-gold transition-colors">+91 93124 31445</a></li>
             <li>Web: <a href="https://thecartculin.com" target="_blank" rel="noopener noreferrer" class="text-ivory/70 text-sm hover:text-gold transition-colors">thecartculin.com</a></li>
             <!-- UPDATE: Replace with actual cities served -->
             <li>Serving: Delhi NCR, Aligarh, Meerut, West UP</li>
           </ul>
-          <div class="flex gap-4 mt-6">
-            <a href="#" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gold/30 transition-colors" aria-label="Instagram"><svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-          </div>
+          <!-- Add your real profile URL here once it exists; a live "#" link was
+           previously published here and jumped to the top of the page.
+        <div class="flex gap-4 mt-6">
+          <a href="https://instagram.com/YOURHANDLE" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gold/30 transition-colors" aria-label="Instagram"><svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+        </div> -->
         </div>
       </div>
       <div class="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p class="text-ash text-xs">&copy; 2026 The Cart &amp; Culinary Co. Pvt. Ltd. All rights reserved.</p>
-        <p class="text-ash text-xs">Premium Cart Catering for Weddings &amp; Events</p>
+        <p class="text-ivory/70 text-xs">&copy; 2026 The Cart &amp; Culinary Co. Pvt. Ltd. All rights reserved.</p>
+        <p class="text-ivory/70 text-xs">Premium Cart Catering for Weddings &amp; Events</p>
       </div>
     </div>
   </footer>
@@ -729,7 +789,7 @@
   <!-- ============================================
        CART DETAILS MODAL (populated by assets/js/main.js)
        ============================================ -->
-  <div id="cartModal" class="fixed inset-0 z-[70] hidden items-center justify-center p-4 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="cartModalTitle">
+  <div id="cartModal" class="fixed inset-0 z-[80] hidden items-center justify-center p-4 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="cartModalTitle">
     <div id="cartModalOverlay" class="cart-modal-overlay absolute inset-0 bg-royal/80 backdrop-blur-sm"></div>
 
     <div class="cart-modal relative w-full max-w-2xl max-h-[88vh] overflow-y-auto bg-pearl rounded-2xl shadow-royal-lg ring-1 ring-royal/10">
@@ -738,7 +798,7 @@
       </button>
 
       <div class="relative aspect-[16/9] overflow-hidden bg-royal/5">
-        <img id="cartModalImg" src="" alt="" class="w-full h-full object-cover">
+        <img id="cartModalImg" alt="" class="w-full h-full object-cover">
         <div class="absolute inset-0 bg-gradient-to-t from-royal/90 via-royal/20 to-transparent"></div>
         <div class="absolute bottom-0 left-0 right-0 p-5 sm:p-7">
           <p id="cartModalEyebrow" class="text-gold text-[10px] sm:text-xs font-semibold tracking-luxe uppercase mb-1.5"></p>
@@ -774,7 +834,7 @@
   <div id="lightbox" class="lightbox fixed inset-0 z-[60] bg-black/90 flex items-center justify-center">
     <button id="lightboxClose" class="absolute top-4 right-4 text-white/80 hover:text-white transition-colors" aria-label="Close lightbox"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
     <button id="lightboxPrev" class="absolute left-4 text-white/80 hover:text-white transition-colors" aria-label="Previous image"><svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg></button>
-    <img id="lightboxImg" src="" alt="" class="lightbox-image">
+    <img id="lightboxImg" alt="" class="lightbox-image">
     <button id="lightboxNext" class="absolute right-4 text-white/80 hover:text-white transition-colors" aria-label="Next image"><svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></button>
   </div>
 
