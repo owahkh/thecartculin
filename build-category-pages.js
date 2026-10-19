@@ -17,7 +17,6 @@ const CATEGORIES = [
   ['games', 'Games &amp; Entertainment'],
 ];
 
-// UPDATE: replace 919312431445 with the real WhatsApp number
 const WHATSAPP = '919312431445';
 
 function page(id, name) {

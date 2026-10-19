@@ -9,7 +9,7 @@
 window.TCC = (function () {
   'use strict';
 
-  // UPDATE: Replace with the real WhatsApp number (country code + number, no +)
+  // Business WhatsApp number (country code + number, no +)
   var WHATSAPP = '919312431445';
 
   /* ---- Service areas, grouped by proximity ---- */
