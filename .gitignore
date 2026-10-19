@@ -15,4 +15,5 @@
 
 # Build/deploy artifacts
 node_modules/
-dist/.shots/
+dist/
+.shots/
