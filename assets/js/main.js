@@ -416,6 +416,7 @@
         var text = "Hello, I'd like to discuss a custom cart for my event.";
         text += line('Event type', eventType);
         text += line('Approx. guests', guests);
+        text += line('Event location', val('customLocation'));
         if (selected.length) {
           text += '\n\n*Carts in mind:*\n' + selected.map(function (s) { return '- ' + s; }).join('\n');
         }

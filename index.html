@@ -46,10 +46,10 @@
        ============================================ -->
   <header id="siteHeader" class="site-header">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16 sm:h-20">
+      <div class="flex items-center justify-between h-28 sm:h-32 xl:h-36">
 
         <a href="#home" class="brand-lockup" aria-label="The Cart and Culinary Co. — home">
-          <img src="assets/images/logo-wide.png" alt="The Cart &amp; Culinary Co." class="brand-mark" width="133" height="52">
+          <img src="assets/images/logo-wide.png" alt="The Cart &amp; Culinary Co." class="brand-mark" width="200" height="78">
         </a>
 
         <nav class="hidden lg:flex items-center gap-7" aria-label="Primary">
@@ -286,6 +286,11 @@
                 <input type="number" id="customGuests" name="guests" min="1" placeholder="e.g. 250" inputmode="numeric">
               </div>
 
+              <div class="custom-form-row">
+                <label for="customLocation">Event location (city / venue) <span aria-hidden="true">*</span></label>
+                <input type="text" id="customLocation" name="location" required placeholder="e.g. Jaipur, The Ananta — or just the city">
+              </div>
+
               <fieldset class="custom-form-row">
                 <legend>Carts you already have in mind</legend>
                 <div id="customCartPicker" class="custom-picker"></div>
@@ -297,7 +302,6 @@
                 <textarea id="customIdea" name="idea" rows="4" placeholder="e.g. A Gujarati thaali counter with live rotis, plus a bangle cart in maroon and gold."></textarea>
               </div>
 
-              <div class="picker-summary" role="status" aria-live="polite">Nothing selected yet.</div>
               <div class="custom-form-actions">
                 <button type="submit" class="btn-gold w-full justify-center">Send this to us</button>
                 <p id="customCartFeedback" class="custom-feedback" role="status" aria-live="polite"></p>
@@ -536,7 +540,7 @@
 
       <div class="footer-top">
         <div class="footer-brand">
-          <img src="assets/images/logo-wide.png" alt="The Cart &amp; Culinary Co." class="footer-mark" width="164" height="64">
+          <img src="assets/images/logo-wide.png" alt="The Cart &amp; Culinary Co." class="footer-mark" width="328" height="128">
           <p class="footer-name">The Cart &amp; Culinary Co.</p>
           <p class="footer-line">Live cart catering for weddings, events and parties — located in Delhi, serving events all over India.</p>
           <a href="#contact" class="btn-gold btn-sm">Request a quotation</a>

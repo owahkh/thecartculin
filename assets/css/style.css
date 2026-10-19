@@ -19,11 +19,12 @@
   --line-strong: rgba(27, 16, 51, 0.22);
   --font-display: 'Playfair Display', Georgia, serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --header-h: 64px;
+  --header-h: 112px;
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@media (min-width: 640px) { :root { --header-h: 80px; } }
+@media (min-width: 640px) { :root { --header-h: 128px; } }
+@media (min-width: 1024px) { :root { --header-h: 144px; } }
 
 /* ---------- Base ---------- */
 * { box-sizing: border-box; }
@@ -133,16 +134,18 @@ section { padding: clamp(3.5rem, 8vw, 7rem) 0; }
 .brand-lockup { display: flex; align-items: center; text-decoration: none; min-width: 0; }
 /* The wide plaque artwork carries the full wordmark, so it stands alone in the
    lockup — no text column beside it. Size it by height; the intrinsic
-   2540x990 ratio sets the width. */
+   2540x990 ratio sets the width. Doubled per request; on very narrow phones a
+   fallback keeps the Quote button and hamburger on the same row. */
 .brand-mark {
-  height: 44px;
+  height: 78px;
   width: auto;
   display: block;
   flex-shrink: 0;
   border-radius: 6px;
 }
-@media (min-width: 640px)  { .brand-mark { height: 52px; } }
-@media (min-width: 1024px) { .brand-mark { height: 56px; } }
+@media (max-width: 379px) { .brand-mark { height: 60px; } }
+@media (min-width: 640px)  { .brand-mark { height: 104px; } }
+@media (min-width: 1024px) { .brand-mark { height: 112px; } }
 
 /* The hero sits on cream, so the header never needs to invert. */
 .header-link {
@@ -924,7 +927,7 @@ section { padding: clamp(3.5rem, 8vw, 7rem) 0; }
 @media (min-width: 1024px) { .footer-top { grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 2rem; } }
 
 .footer-brand { max-width: 20rem; }
-.footer-mark { height: 64px; width: auto; margin-bottom: 0.85rem; display: block; border-radius: 6px; }
+.footer-mark { height: 128px; width: auto; margin-bottom: 0.85rem; display: block; border-radius: 6px; }
 .footer-name { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 0 0 0.5rem; }
 .footer-line { font-size: 0.8125rem; line-height: 1.65; color: rgba(247, 242, 228, 0.65); margin: 0 0 1.25rem; }
 
@@ -1101,7 +1104,7 @@ body.modal-open .whatsapp-fab { opacity: 0; pointer-events: none; }
 }
 .category-route-header a { text-decoration: none; }
 .category-route-header .is-brand { display: flex; align-items: center; gap: 0.75rem; }
-.category-route-header img { height: 52px; width: auto; border-radius: 6px; }
+.category-route-header img { height: 104px; width: auto; border-radius: 6px; }
 .category-route-header .brand-name { font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; }
 .category-route-header .is-back { font-size: 0.8125rem; color: var(--ash); }
 .category-route-header .is-back:hover { color: var(--gold-dark); }
