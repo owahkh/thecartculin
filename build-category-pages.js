@@ -25,8 +25,8 @@ function page(id, name) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${name} | The Cart &amp; Culinary Co. — Delhi NCR</title>
-  <meta name="description" content="Cart catering options in ${name.replace(/&amp;/g, 'and')} from The Cart &amp; Culinary Co., serving Delhi NCR. Every cart is quoted to your event.">
+  <title>${name} | The Cart &amp; Culinary Co. — Delhi, Serving India</title>
+  <meta name="description" content="Cart catering options in ${name.replace(/&amp;/g, 'and')} from The Cart &amp; Culinary Co., serving all of India from Delhi. Every cart is quoted to your event.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://thecartculin.com/categories/${id}/">
   <link rel="icon" type="image/png" href="../../assets/images/logo-approved.png">
@@ -52,7 +52,7 @@ function page(id, name) {
 
   <footer class="category-route-footer">
     <a href="/">The Cart &amp; Culinary Co.</a>
-    <span>Delhi NCR &middot; Western UP</span>
+    <span>Delhi NCR &middot; Pan-India</span>
     <a href="https://wa.me/${WHATSAPP}" target="_blank" rel="noopener noreferrer">Request a quotation</a>
   </footer>
 

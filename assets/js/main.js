@@ -189,9 +189,8 @@
 
     var footerCities = document.querySelector('[data-footer-cities]');
     if (footerCities) {
-      footerCities.textContent = 'Serving ' + T.serviceAreas.primary.length +
-        ' areas across Delhi NCR, plus ' + T.serviceAreas.extended.length +
-        ' towns in Western UP.';
+      footerCities.textContent = 'Located in Delhi NCR — serving events all over India, ' +
+        'from Agra to Jaipur to the hills.';
     }
 
     var yearEl = document.querySelector('[data-year]');

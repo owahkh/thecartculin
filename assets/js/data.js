@@ -15,7 +15,7 @@ window.TCC = (function () {
   /* ---- Service areas, grouped by proximity ---- */
   var serviceAreas = {
     primary: ['South Delhi', 'South West Delhi', 'Central Delhi', 'New Delhi', 'East Delhi', 'North East Delhi', 'West Delhi', 'North West Delhi', 'Gurugram', 'Noida', 'Greater Noida', 'Ghaziabad', 'Faridabad'],
-    extended: ['Aligarh', 'Meerut', 'Agra', 'Mathura', 'Vrindavan', 'Hapur', 'Muzaffarnagar', 'Saharanpur', 'Bulandshahr', 'Moradabad'],
+    extended: ['Agra', 'Mathura', 'Vrindavan', 'Jaipur', 'Udaipur', 'Lucknow', 'Chandigarh', 'Mussoorie', 'Rishikesh', 'Varanasi'],
   };
 
   /* ---- Enquiry link builders ---- */
