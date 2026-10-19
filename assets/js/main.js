@@ -1,581 +1,452 @@
 /* ============================================
-   THE CART & CULIN CO. — Main JavaScript
+   THE CART & CULINARY CO. — Main JavaScript
+   Header, mobile nav, cart modal, cart picker,
+   form-to-WhatsApp, scroll reveal.
    ============================================ */
 
-document.addEventListener('DOMContentLoaded', function () {
+(function () {
+  'use strict';
 
-  // ---- Scroll lock ----
-  // The off-canvas nav, the lightbox and the cart modal each want to pin the
-  // body. Clearing body.overflow in any one of them used to unlock the page
-  // while another was still open, so track them with a counter.
+  var T = window.TCC;
+  if (!T) return;
+
+  var esc = function (s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  };
+
+  var ready = function (fn) {
+    if (document.readyState !== 'loading') fn();
+    else document.addEventListener('DOMContentLoaded', fn);
+  };
+
+  /* ---- Scroll locking, shared by the drawer and the modal ---- */
   var scrollLocks = 0;
-
   function lockScroll() {
     scrollLocks++;
     document.body.style.overflow = 'hidden';
   }
-
   function unlockScroll() {
     scrollLocks = Math.max(0, scrollLocks - 1);
     if (scrollLocks === 0) document.body.style.overflow = '';
   }
 
-  // ---- Focus trap ----
-  // The modal is marked aria-modal="true" but nothing stopped Tab from walking
-  // through the page behind it. Trap within `container` and restore focus to
-  // whatever opened it on close.
   var FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-  function trapFocus(container, event) {
-    if (event.key !== 'Tab') return;
-    var nodes = Array.prototype.filter.call(
-      container.querySelectorAll(FOCUSABLE),
-      function (el) { return el.offsetParent !== null; }
-    );
+  function trapFocus(container, e) {
+    if (e.key !== 'Tab') return;
+    var nodes = Array.prototype.filter.call(container.querySelectorAll(FOCUSABLE), function (el) {
+      return el.offsetParent !== null;
+    });
     if (!nodes.length) return;
     var first = nodes[0];
     var last = nodes[nodes.length - 1];
-    if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
       last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
       first.focus();
     } else if (!container.contains(document.activeElement)) {
-      event.preventDefault();
+      e.preventDefault();
       first.focus();
     }
   }
 
-  // ---- Mobile Navigation Toggle ----
-  const hamburger = document.getElementById('hamburger');
-  const mobileNav = document.getElementById('mobileNav');
-  const mobileNavOverlay = document.getElementById('mobileNavOverlay');
-  const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+  ready(function () {
 
-  function openMobileNav() {
-    mobileNav.classList.add('open');
-    mobileNavOverlay.classList.add('open');
-    // hides the WhatsApp FAB, which shares the drawer's right-hand edge
-    document.body.classList.add('nav-open');
-    lockScroll();
-    hamburger.setAttribute('aria-expanded', 'true');
-    var firstLink = mobileNav.querySelector(FOCUSABLE);
-    if (firstLink) firstLink.focus();
-  }
+    /* ==========================================
+       HEADER
+       ========================================== */
+    var header = document.getElementById('siteHeader');
 
-  function closeMobileNav() {
-    if (!mobileNav.classList.contains('open')) return;
-    mobileNav.classList.remove('open');
-    mobileNavOverlay.classList.remove('open');
-    document.body.classList.remove('nav-open');
-    unlockScroll();
-    hamburger.setAttribute('aria-expanded', 'false');
-    hamburger.focus();
-  }
+    function onScroll() {
+      if (header) header.classList.toggle('is-scrolled', window.scrollY > 24);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
 
-  if (hamburger) {
-    hamburger.addEventListener('click', function () {
-      const isOpen = mobileNav.classList.contains('open');
-      isOpen ? closeMobileNav() : openMobileNav();
+    /* ==========================================
+       MOBILE NAV
+       ========================================== */
+    var hamburger = document.getElementById('hamburger');
+    var drawer = document.getElementById('mobileNav');
+    var drawerOverlay = document.getElementById('mobileNavOverlay');
+    var drawerClose = document.getElementById('mobileNavClose');
+
+    function openDrawer() {
+      if (!drawer) return;
+      drawer.classList.add('is-open');
+      if (drawerOverlay) drawerOverlay.classList.add('is-open');
+      document.body.classList.add('nav-open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      hamburger.setAttribute('aria-label', 'Close menu');
+      lockScroll();
+      var first = drawer.querySelector(FOCUSABLE);
+      if (first) first.focus();
+    }
+
+    function closeDrawer() {
+      if (!drawer) return;
+      drawer.classList.remove('is-open');
+      if (drawerOverlay) drawerOverlay.classList.remove('is-open');
+      document.body.classList.remove('nav-open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.setAttribute('aria-label', 'Open menu');
+      unlockScroll();
+      if (hamburger) hamburger.focus();
+    }
+
+    if (hamburger) hamburger.addEventListener('click', function () {
+      drawer.classList.contains('is-open') ? closeDrawer() : openDrawer();
     });
-  }
+    if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+    if (drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
 
-  if (mobileNavOverlay) {
-    mobileNavOverlay.addEventListener('click', closeMobileNav);
-  }
+    /* ==========================================
+       SMOOTH SCROLL + CART JUMP LINKS
+       ========================================== */
+    document.addEventListener('click', function (e) {
+      var anchor = e.target.closest('a[href^="#"]');
+      if (!anchor) return;
 
-  mobileNavLinks.forEach(function (link) {
-    link.addEventListener('click', closeMobileNav);
-  });
+      var jump = anchor.getAttribute('data-cart-jump');
+      if (jump) {
+        e.preventDefault();
+        closeDrawer();
+        openCartModal(jump);
+        return;
+      }
 
-  // ---- Sticky Header Background ----
-  const header = document.getElementById('siteHeader');
+      var href = anchor.getAttribute('href');
+      if (!href || href === '#') return;
 
-  function handleHeaderScroll() {
-    if (window.scrollY > 50) {
-      header.classList.add('header-scrolled');
+      /* Close any header dropdown this link was inside. */
+      var openMenu = anchor.closest('.category-menu[open]');
+      if (openMenu) openMenu.removeAttribute('open');
+
+      /* Any in-page link inside the open modal closes it first. */
+      if (anchor.hasAttribute('data-close-modal')) {
+        e.preventDefault();
+        closeCartModal();
+      }
+
+      var target = document.querySelector(href);
+      if (!target) return;
+      e.preventDefault();
+
+      /* The header is fixed, so land the target below it. */
+      var headerHeight = header ? header.offsetHeight : 0;
+      var top = target.getBoundingClientRect().top + window.scrollY - headerHeight - 8;
+      window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
+      if (history.replaceState) history.replaceState(null, '', href);
+    });
+
+    /* ==========================================
+       OCCASION DROPDOWN (desktop header)
+       ========================================== */
+    var occasionMenu = document.querySelector('[data-occasion-menu]');
+    if (occasionMenu) {
+      occasionMenu.innerHTML = T.occasions.map(function (occ) {
+        return '<section>' +
+          '<a class="nav-menu-cat" href="#occasions">' + esc(occ.name) + '</a>' +
+          '<p class="nav-menu-brand">' + esc(occ.detail) + '</p>' +
+          '<ul>' + occ.featuredCarts.slice(0, 4).map(function (id) {
+            var c = T.cartsById[id];
+            return c ? '<li><a href="#cart-' + esc(id) + '" data-cart-jump="' + esc(id) + '">' + esc(c.name) + '</a></li>' : '';
+          }).join('') + '</ul>' +
+        '</section>';
+      }).join('');
+    }
+
+    /* Clicking outside a <details> dropdown should close it. */
+    document.addEventListener('click', function (e) {
+      document.querySelectorAll('.category-menu[open]').forEach(function (d) {
+        if (!d.contains(e.target)) d.removeAttribute('open');
+      });
+    });
+
+    /* ==========================================
+       FOOTER + SERVICE AREA LISTS
+       ========================================== */
+    var footerCats = document.querySelector('[data-footer-categories]');
+    if (footerCats) {
+      footerCats.innerHTML = T.categories.map(function (c) {
+        return '<li><a href="/categories/' + esc(c.id) + '/">' + esc(c.name) + '</a></li>';
+      }).join('');
+    }
+
+    var primaryList = document.querySelector('[data-service-primary]');
+    if (primaryList) primaryList.innerHTML = T.serviceAreas.primary.map(function (a) {
+      return '<li>' + esc(a) + '</li>';
+    }).join('');
+
+    var extendedList = document.querySelector('[data-service-extended]');
+    if (extendedList) extendedList.innerHTML = T.serviceAreas.extended.map(function (a) {
+      return '<li>' + esc(a) + '</li>';
+    }).join('');
+
+    var footerCities = document.querySelector('[data-footer-cities]');
+    if (footerCities) {
+      footerCities.textContent = 'Serving ' + T.serviceAreas.primary.length +
+        ' areas across Delhi NCR, plus ' + T.serviceAreas.extended.length +
+        ' towns in Western UP.';
+    }
+
+    var yearEl = document.querySelector('[data-year]');
+    if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+    /* ==========================================
+       CART PICKER (used on both forms)
+       ========================================== */
+    function buildPicker(host, limit) {
+      var chosen = [];
+      host.innerHTML = T.categories.map(function (cat) {
+        var head = '<details class="picker-group">' +
+          '<summary>' + esc(cat.name) + ' <span>' + cat.carts.length + '</span></summary>' +
+          '<div class="picker-items">' +
+          cat.carts.map(function (c) {
+            return '<label class="picker-item">' +
+              '<input type="checkbox" value="' + esc(c.name) + '" data-cat="' + esc(cat.name) + '">' +
+              '<span><strong>' + esc(c.name) + '</strong><em>' + esc(c.note) + '</em></span>' +
+            '</label>';
+          }).join('') +
+          '</div></details>';
+        return head;
+      }).join('');
+
+          /* Re-render the chosen summary whenever a box is ticked.
+         The summary is a static sibling of the picker in the HTML, so we
+         fill it rather than inject it — injecting it inside the picker
+         wrapper inherited the wrapper's border/background and rendered as
+         a broken grey bar. */
+      var summary = host.parentElement.querySelector('.picker-summary');
+      if (!summary) {
+        summary = document.createElement('p');
+        summary.className = 'picker-summary';
+        host.insertAdjacentElement('afterend', summary);
+      }
+
+      function updateSummary() {
+        var picked = Array.prototype.slice.call(host.querySelectorAll('input:checked'));
+        chosen = picked.map(function (i) { return i.value; });
+        if (!chosen.length) {
+          summary.textContent = 'Nothing selected yet.';
+          summary.classList.remove('has-value');
+          return;
+        }
+        var shown = limit ? chosen.slice(0, limit) : chosen;
+        var text = shown.join(', ');
+        if (limit && chosen.length > limit) text += ' +' + (chosen.length - limit) + ' more';
+        summary.textContent = chosen.length + ' selected: ' + text;
+        summary.classList.add('has-value');
+      }
+
+      host.addEventListener('change', updateSummary);
+      updateSummary();
+
+      return function getSelected() {
+        return Array.prototype.map.call(host.querySelectorAll('input:checked'), function (i) {
+          return i.value;
+        });
+      };
+    }
+
+    var getCustomSelection = null;
+    var customPicker = document.getElementById('customCartPicker');
+    if (customPicker) getCustomSelection = buildPicker(customPicker, 8);
+
+    var getContactSelection = null;
+    var contactPicker = document.getElementById('contactCartPicker');
+    if (contactPicker) getContactSelection = buildPicker(contactPicker, 8);
+
+    /* ==========================================
+       CART DETAIL MODAL
+       ========================================== */
+    var modal = document.getElementById('cartModal');
+    var modalOpener = null;
+
+    function openCartModal(id) {
+      var cart = T.cartsById[id];
+      if (!cart || !modal) return;
+
+      document.getElementById('cartModalCategory').textContent = cart.categoryName;
+      document.getElementById('cartModalTitle').textContent = cart.name;
+      document.getElementById('cartModalTagline').textContent = cart.tagline;
+      document.getElementById('cartModalDesc').textContent = cart.description;
+
+      var html = '';
+      cart.details.forEach(function (section, i) {
+        html += '<div class="modal-details-group">';
+        html += '<h3>' + esc(section.heading) + '</h3>';
+        html += '<ul>' + section.items.map(function (item) {
+          return '<li>' + esc(item) + '</li>';
+        }).join('') + '</ul>';
+        html += '</div>';
+      });
+      document.getElementById('cartModalSections').innerHTML = html;
+
+      var enquire = document.getElementById('cartModalEnquire');
+      enquire.setAttribute('href', cart.waLink);
+
+      modal.removeAttribute('hidden');
+      modal.classList.add('is-open');
+      document.body.classList.add('modal-open');
+      lockScroll();
+      modalOpener = document.activeElement;
+      document.getElementById('cartModalClose').focus();
+    }
+
+    function closeCartModal() {
+      if (!modal || !modal.classList.contains('is-open')) return;
+      modal.classList.remove('is-open');
+      modal.setAttribute('hidden', '');
+      document.body.classList.remove('modal-open');
+      unlockScroll();
+      if (modalOpener && typeof modalOpener.focus === 'function') modalOpener.focus();
+      modalOpener = null;
+    }
+
+    if (modal) {
+      document.getElementById('cartModalClose').addEventListener('click', closeCartModal);
+      document.getElementById('cartModalOverlay').addEventListener('click', closeCartModal);
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') {
+        if (modal && modal.classList.contains('is-open')) trapFocus(modal, e);
+        return;
+      }
+      if (modal && modal.classList.contains('is-open')) { closeCartModal(); return; }
+      if (drawer && drawer.classList.contains('is-open')) closeDrawer();
+    });
+
+    /* Deep link: /#cart-kunafa opens that cart. */
+    if (window.location.hash.indexOf('#cart-') === 0) {
+      var requested = window.location.hash.slice(6);
+      if (T.cartsById[requested]) window.setTimeout(function () { openCartModal(requested); }, 0);
+    }
+
+    /* ==========================================
+       FORMS -> WHATSAPP
+       ========================================== */
+    function line(label, value) {
+      return value ? '\n*' + label + ':* ' + value : '';
+    }
+
+    function openWa(text, feedbackEl, successMsg) {
+      var url = 'https://wa.me/' + T.whatsapp + '?text=' + encodeURIComponent(text);
+      var win = window.open(url, '_blank');
+      if (win) {
+        feedbackEl.textContent = successMsg;
+        feedbackEl.classList.add('is-ok');
+      } else {
+        feedbackEl.textContent = 'Your browser blocked the new window. ';
+        feedbackEl.classList.remove('is-ok');
+        var link = document.createElement('a');
+        link.href = url;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.textContent = 'Open WhatsApp to send it.';
+        feedbackEl.appendChild(link);
+      }
+    }
+
+    var contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+      contactForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        if (!contactForm.checkValidity()) {
+          contactForm.reportValidity();
+          return;
+        }
+
+        var val = function (id) {
+          var el = document.getElementById(id);
+          return el ? el.value.trim() : '';
+        };
+
+        var occasion = document.getElementById('formOccasion').value;
+        var venue = val('formVenue');
+        var diet = val('formDiet');
+        var message = val('formMessage');
+        var selected = getContactSelection ? getContactSelection() : [];
+
+        var text = "Hello, I'd like a quotation for cart catering.";
+        text += line('Name', val('formName'));
+        text += line('Phone', val('formPhone'));
+        text += line('Occasion', occasion);
+        text += line('Date', val('formDate'));
+        text += line('Guest count', val('formGuests'));
+        text += line('City', val('formCity'));
+        text += line('Venue', venue);
+        if (selected.length) {
+          text += '\n\n*Carts interested in:*\n' + selected.map(function (s) { return '- ' + s; }).join('\n');
+        }
+        text += line('Dietary needs', diet);
+        text += line('Message', message);
+
+        openWa(text, document.getElementById('formFeedback'),
+          'WhatsApp is open with your details. Review the message and send it to receive your quotation.');
+      });
+    }
+
+    var customForm = document.getElementById('customCartForm');
+    if (customForm) {
+      customForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        var val = function (id) {
+          var el = document.getElementById(id);
+          return el ? el.value.trim() : '';
+        };
+
+        var eventType = document.getElementById('customEventType').value;
+        var guests = val('customGuests');
+        var idea = val('customIdea');
+        var selected = getCustomSelection ? getCustomSelection() : [];
+
+        if (!eventType && !selected.length && !idea) {
+          var fb = document.getElementById('customCartFeedback');
+          fb.textContent = 'Pick at least one cart, or tell us your idea, before sending.';
+          return;
+        }
+
+        var text = "Hello, I'd like to discuss a custom cart for my event.";
+        text += line('Event type', eventType);
+        text += line('Approx. guests', guests);
+        if (selected.length) {
+          text += '\n\n*Carts in mind:*\n' + selected.map(function (s) { return '- ' + s; }).join('\n');
+        }
+        text += line('My idea', idea);
+
+        openWa(text, document.getElementById('customCartFeedback'),
+          'WhatsApp is open with your custom cart brief. Send it and we will come back with ideas and a quotation.');
+      });
+    }
+
+    /* ==========================================
+       SCROLL REVEAL
+       ========================================== */
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!reduced && 'IntersectionObserver' in window) {
+      var targets = document.querySelectorAll('.reveal');
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-in');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
+
+      targets.forEach(function (el) { observer.observe(el); });
     } else {
-      header.classList.remove('header-scrolled');
+      document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('is-in'); });
     }
-  }
 
-  window.addEventListener('scroll', handleHeaderScroll, { passive: true });
-  handleHeaderScroll();
-
-  // ---- Smooth Scroll for Anchor Links ----
-  document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      var targetId = this.getAttribute('href');
-      if (targetId === '#') return;
-      var target = document.querySelector(targetId);
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
   });
-
-  // ---- Scroll Reveal Animation ----
-  var revealElements = document.querySelectorAll('.reveal');
-
-  function checkReveal() {
-    var windowHeight = window.innerHeight;
-    revealElements.forEach(function (el) {
-      var elementTop = el.getBoundingClientRect().top;
-      var revealPoint = 120;
-      if (elementTop < windowHeight - revealPoint) {
-        el.classList.add('active');
-      }
-    });
-  }
-
-  window.addEventListener('scroll', checkReveal, { passive: true });
-  checkReveal();
-
-  // ---- Contact Form → WhatsApp Link ----
-  var contactForm = document.getElementById('contactForm');
-
-  if (contactForm) {
-    contactForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      var name = document.getElementById('formName').value.trim();
-      var phone = document.getElementById('formPhone').value.trim();
-      var city = document.getElementById('formCity').value.trim();
-      var eventDate = document.getElementById('formDate').value.trim();
-      var occasion = document.getElementById('formOccasion').value;
-      var guests = document.getElementById('formGuests').value.trim();
-      var message = document.getElementById('formMessage').value.trim();
-
-      // UPDATE: Replace with your actual WhatsApp number
-      var whatsappNumber = '919312431445';
-
-      var text = 'Hi, I\'m interested in The Cart & Culinary Co. for my event.\n\n';
-      text += '*Name:* ' + name + '\n';
-      if (phone) text += '*Phone:* ' + phone + '\n';
-      if (city) text += '*City:* ' + city + '\n';
-      if (eventDate) text += '*Event Date:* ' + eventDate + '\n';
-      if (occasion) text += '*Occasion:* ' + occasion + '\n';
-      if (guests) text += '*Guest Count:* ' + guests + '\n';
-      if (message) text += '*Message:* ' + message;
-
-      var encodedText = encodeURIComponent(text);
-      var whatsappUrl = 'https://wa.me/' + whatsappNumber + '?text=' + encodedText;
-
-      window.open(whatsappUrl, '_blank');
-    });
-  }
-
-  // ---- Gallery Lightbox ----
-  var lightbox = document.getElementById('lightbox');
-  var lightboxImg = document.getElementById('lightboxImg');
-  var lightboxClose = document.getElementById('lightboxClose');
-  var lightboxPrev = document.getElementById('lightboxPrev');
-  var lightboxNext = document.getElementById('lightboxNext');
-  var galleryItems = document.querySelectorAll('.gallery-item');
-  var currentImageIndex = 0;
-  var lightboxOpener = null;
-
-  function gallerySource(item) {
-    var img = item.querySelector('img');
-    if (!img) return '';
-    // data-full is the hi-res copy; the grid thumbnail is only w=400 and looked
-    // soft when blown up to 85vh
-    return img.getAttribute('data-full') || img.src;
-  }
-
-  function galleryAlt(item) {
-    var img = item.querySelector('img');
-    return img ? img.alt : '';
-  }
-
-  function showImage(index) {
-    var item = galleryItems[index];
-    lightboxImg.src = gallerySource(item);
-    lightboxImg.alt = galleryAlt(item);
-  }
-
-  function openLightbox(index, opener) {
-    currentImageIndex = index;
-    lightboxOpener = opener || null;
-    showImage(index);
-    lightbox.classList.add('active');
-    lockScroll();
-    lightboxClose.focus();
-  }
-
-  function closeLightbox() {
-    lightbox.classList.remove('active');
-    unlockScroll();
-    if (lightboxOpener) lightboxOpener.focus();
-    lightboxOpener = null;
-  }
-
-  function navigateLightbox(direction) {
-    currentImageIndex += direction;
-    if (currentImageIndex < 0) currentImageIndex = galleryItems.length - 1;
-    if (currentImageIndex >= galleryItems.length) currentImageIndex = 0;
-    showImage(currentImageIndex);
-  }
-
-  // The tiles are real <button>s, so Enter/Space arrive here as a normal click
-  galleryItems.forEach(function (item, index) {
-    item.addEventListener('click', function () {
-      openLightbox(index, item);
-    });
-  });
-
-  if (lightboxClose) {
-    lightboxClose.addEventListener('click', closeLightbox);
-  }
-
-  if (lightboxPrev) {
-    lightboxPrev.addEventListener('click', function () {
-      navigateLightbox(-1);
-    });
-  }
-
-  if (lightboxNext) {
-    lightboxNext.addEventListener('click', function () {
-      navigateLightbox(1);
-    });
-  }
-
-  if (lightbox) {
-    lightbox.addEventListener('click', function (e) {
-      if (e.target === lightbox) closeLightbox();
-    });
-  }
-
-  document.addEventListener('keydown', function (e) {
-    // Escape closes the drawer first when it is open
-    if (e.key === 'Escape' && mobileNav.classList.contains('open')) {
-      closeMobileNav();
-      return;
-    }
-    if (!lightbox || !lightbox.classList.contains('active')) return;
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowLeft') navigateLightbox(-1);
-    if (e.key === 'ArrowRight') navigateLightbox(1);
-    trapFocus(lightbox, e);
-  });
-
-  // ---- Auto-enquiry WhatsApp links for cart cards ----
-  // UPDATE: Replace with your actual WhatsApp number
-  var cartWhatsappNumber = '919312431445';
-
-  // ---- Cart detail data (loaded into modal on tile click) ----
-  var cartData = {
-    chaat: {
-      eyebrow: 'Luxury Chaat Cart',
-      title: 'Chaat & Street Food Cart',
-      img: 'assets/images/chaat.jpg',
-      alt: 'Luxury Chaat & Street Food Cart',
-      desc: "Bring the nostalgia of India's beloved street food to your celebration. Freshly assembled golgappa, papdi chaat, dahi bhalla, bhel puri, and more — served from a beautifully styled cart, customised to your event.",
-      sections: [
-        { heading: 'CHOICE OF BASE', items: ['Classic Golgappa (Pani Puri)', 'Papdi Chaat & Dahi Bhalla'] },
-        { heading: 'FRESH INGREDIENTS', items: ['Boondi, Sev & Fresh Coriander', 'Spiced Potatoes & Chickpeas', 'Curd, Mint & Tamarind Chutneys'] },
-        { heading: 'SIGNATURE TOPPINGS', items: ['Chaat Masala & Fine Sev Sprinkle', 'Pomegranate & Chopped Nuts', '4 Chatpata Paani Flavours'] }
-      ],
-      price: 'Starting at ₹15,000',
-      pricenote: 'for up to 100 pax | ₹25,000 for 200'
-    },
-    kunafa: {
-      eyebrow: 'Luxury Kunafa Cart',
-      title: 'Kunafa Cart',
-      img: 'assets/images/kunafa.jpg',
-      alt: 'Luxury Kunafa Cart - Middle Eastern Dessert',
-      desc: "Transport your guests with the rich, aromatic flavors of the Middle East through a decadent dessert experience. Freshly baked, warm Kunafa served live with mesmerizing presentation.",
-      sections: [
-        { heading: 'CHOICE OF BASE', items: ['Classic Kataifi (Crispy Shredded Phyllo)', "Na'ama (Fine Semolina Dough)"] },
-        { heading: 'FRESH INGREDIENTS & CHEESE', items: ['Authentic Akawi & Nabulsi Cheese', 'Rich Ashta (Clotted Cream)', 'Aromatic Orange Blossom & Rosewater Syrup'] },
-        { heading: 'SIGNATURE TOPPINGS', items: ['Crushed Emerald Pistachios', 'Nutella Syrup', 'White Chocolate Syrup', 'Spiced Honey Drizzle', 'Liquid Belgian Chocolate'] }
-      ],
-      price: 'Starting at ₹20,000',
-      pricenote: 'for 50 Kunafa | ₹30,000 for 100'
-    },
-    crepe: {
-      eyebrow: 'Luxury Crepe Cart',
-      title: 'Crepe Cart',
-      img: 'https://images.unsplash.com/photo-1755594492462-2907f15cb4b3?w=800&q=80',
-      alt: 'Luxury Crepe Cart - French Crepes',
-      desc: "Bring the charm of a Parisian patisserie to your celebration. A sophisticated, live-action culinary experience where guests watch custom sweet or savory crepes spun to golden perfection.",
-      sections: [
-        { heading: 'CHOICE OF BATTER', items: ['Classic French Vanilla', 'Rich Dark Chocolate'] },
-        { heading: 'FRESH INGREDIENTS', items: ['Sliced Strawberries & Bananas', 'Mixed Summer Berries', 'Crushed Toasted Hazelnuts & Almonds'] },
-        { heading: 'SIGNATURE TOPPINGS', items: ['Nutella & White Chocolate', 'Warm Salted Caramel', 'Pure Maple Syrup', 'Freshly Whipped Chantilly Cream'] }
-      ],
-      price: 'Starting at ₹15,000',
-      pricenote: 'for up to 100 pax | ₹25,000 for 200'
-    },
-    pancake: {
-      eyebrow: 'Luxury Pancake Cart',
-      title: 'Pancake Cart',
-      img: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=800&q=80',
-      alt: 'Luxury Pancake Cart - Fluffy Pancakes',
-      desc: "Indulge your guests with fluffy, freshly flipped stackable treats. A warm, comforting, yet refined brunch vibe with live mini & soufflé pancake station.",
-      sections: [
-        { heading: 'CHOICE OF BATTER', items: ['Golden Buttermilk', 'Red Velvet'] },
-        { heading: 'FRESH INGREDIENTS', items: ['Fresh Strawberries & Blueberries', 'Caramelized Bananas', 'Chocolate Chips & Toasted Pecans'] },
-        { heading: 'SIGNATURE TOPPINGS', items: ['Organic Maple Syrup', 'Warm Nutella & White Chocolate', 'Salted Caramel Drizzle', 'Whipped Vanilla Cream'] }
-      ],
-      price: 'Starting at ₹15,000',
-      pricenote: 'for up to 100 pax | ₹25,000 for 200'
-    },
-    waffle: {
-      eyebrow: 'Luxury Waffle Cart',
-      title: 'Waffle Cart',
-      img: 'https://images.unsplash.com/photo-1754444217183-40cb409ad3d8?w=800&q=80',
-      alt: 'Luxury Waffle Cart - Belgian Waffles',
-      desc: "Elevate your dessert spread with the irresistible aroma of golden, crisp Liege and Belgian waffles crafted live with artisanal toppings and fresh fruits.",
-      sections: [
-        { heading: 'CHOICE OF BASE', items: ['Classic Pearl-Sugar Liege Waffle', 'Dark Chocolate Belgian Waffle'] },
-        { heading: 'FRESH INGREDIENTS', items: ['Fresh Berry Compote', 'Sliced Bananas & Mangoes', 'Toasted Almond Flakes'] },
-        { heading: 'SIGNATURE TOPPINGS', items: ['Belgian Chocolate Drizzle', 'Warm Biscoff Spread & Cookie Crumbs', 'Sweetened Condensed Milk', 'Fresh Chantilly Cream'] }
-      ],
-      price: 'Starting at ₹15,000',
-      pricenote: 'for up to 100 pax | ₹25,000 for 200'
-    },
-    dumplings: {
-      eyebrow: 'Luxury Dumplings Cart',
-      title: 'Delhi Dumplings Cart',
-      img: 'https://images.unsplash.com/photo-1647999019630-dabe1a837693?w=800&q=80',
-      alt: 'Luxury Dumplings Cart - Delhi Momos',
-      desc: "Bring the iconic street-food energy of Capital city dim sums to an elevated event space. Piping-hot, handcrafted momos and dim sums with gourmet fillings.",
-      sections: [
-        { heading: 'CHOICE OF DUMPLINGS', items: ['Classic Steamed Vegetable & Edamame', 'Paneer & Exotic Herb Dumplings'] },
-        { heading: 'FRESH INGREDIENTS', items: ['Scallions & Crispy Garlic', 'Toasted Sesame Seeds', 'Chili Oil Crunch'] },
-        { heading: 'SIGNATURE TOPPINGS & DIPS', items: ['Fiery Delhi Red Chili Sauce', 'Tangy Sesame Peanut Dip', 'Soy-Ginger Glaze'] }
-      ],
-      price: 'Starting at ₹15,000',
-      pricenote: 'for up to 100 pax | ₹25,000 for 200'
-    },
-    pizza: {
-      eyebrow: 'Luxury Pizza Cart',
-      title: 'Pizza Cart',
-      img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80',
-      alt: 'Luxury Pizza Cart - Neapolitan Pizza',
-      desc: "Bring the warmth of an authentic Neapolitan pizzeria straight to your guests. High-heat portable stone ovens yield blistered, airy crusts baked live in minutes.",
-      sections: [
-        { heading: 'CHOICE OF BASE', items: ['Classic Margherita (Fresh Basil & Mozzarella)', 'Gourmet Truffle Mushroom & Herb'] },
-        { heading: 'FRESH INGREDIENTS', items: ['Fresh Fior di Latte Mozzarella', 'Wild Mushrooms & Baby Spinach', 'Charred Bell Peppers & Olives'] },
-        { heading: 'SIGNATURE TOPPINGS', items: ['Extra Virgin Olive Oil & Chili Flakes', 'Spicy Honey Drizzle', 'Aged Balsamic Glaze', 'Fresh Basil Leaves'] }
-      ],
-      price: 'Starting at ₹15,000',
-      pricenote: 'for up to 100 pax | ₹25,000 for 200'
-    },
-    pasta: {
-      eyebrow: 'Luxury Pasta Cart',
-      title: 'Aakhri Pasta Cart',
-      img: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=800&q=80',
-      alt: 'Luxury Pasta Cart - Italian Pasta',
-      desc: "Turn your event into an Italian feast. A theatrical live-cooking experience where guests customize artisanal pasta dishes tossed in rich, bubbling sauces.",
-      sections: [
-        { heading: 'CHOICE OF PASTA', items: ['Penne Rigate', 'Fresh Fettuccine'] },
-        { heading: 'FRESH INGREDIENTS', items: ['Cherry Tomatoes & Baby Spinach', 'Black Olives & Sun-Dried Tomatoes', 'Roasted Garlic & Sauteed Mushrooms'] },
-        { heading: 'SIGNATURE TOPPINGS & SAUCES', items: ['Creamy Alfredo Sauce', 'Rich San Marzano Marinara', 'Aged Parmesan & Fresh Basil', 'Chili Flakes & Herb Olive Oil'] }
-      ],
-      price: 'Starting at ₹15,000',
-      pricenote: 'for up to 100 pax | ₹25,000 for 200'
-    },
-    shawarma: {
-      eyebrow: 'Luxury Shawarma Cart',
-      title: 'Shawarma Cart',
-      img: 'assets/images/shawarma.jpeg',
-      alt: 'Luxury Shawarma Cart - Middle Eastern Shawarma',
-      desc: "Bring the vibrant night-market energy of Middle Eastern street food to your event. Live vertical rotisserie where succulent fillings are shaved fresh and wrapped in warm pita.",
-      sections: [
-        { heading: 'CHOICE OF BASE', items: ['Spiced Paneer & Cottage Cheese', 'Roasted Falafel & Mediterranean Veggies'] },
-        { heading: 'FRESH INGREDIENTS', items: ['Pickled Turnips & Cucumbers', 'Shredded Iceberg & Tomatoes', 'Parsley & Sumac Onion Salad'] },
-        { heading: 'SIGNATURE TOPPINGS & SAUCES', items: ['Classic Garlic Toum', 'Creamy Tahini Sauce', 'Spicy Harissa Glaze'] }
-      ],
-      price: 'Starting at ₹15,000',
-      pricenote: 'for up to 100 pax | ₹25,000 for 200'
-    },
-    chakhna: {
-      eyebrow: 'Luxury Chakhna Cart',
-      title: 'Chakhna Cart',
-      img: 'assets/images/chakhna.jpg',
-      alt: 'Luxury Chakhna Cart - Indian Bar Snacks',
-      desc: "The ultimate cocktail hour upgrade. Designed specifically to pair with your bar service, offering premium roasted nuts, spicy nibbles, artisan crisps, and tangy dips.",
-      sections: [
-        { heading: 'CHOICE OF CRUNCH', items: ['Peri-Peri Roasted Cashews & Almonds', 'Truffle & Herb Foxnuts (Makhana)'] },
-        { heading: 'FRESH INGREDIENTS & NIBBLES', items: ['Spicy Masala Peanuts', 'Cheese Makhana & Corn Snacks', 'Pickled Olives & Jalapeños'] },
-        { heading: 'SIGNATURE DIPS & MIX-INS', items: ['Mint-Yogurt Chutney', 'Tangy Mango Salsa', 'Spiced Lemon & Chaat Masala Sprinkle'] }
-      ],
-      price: 'Starting at ₹15,000',
-      pricenote: 'for up to 100 pax | ₹25,000 for 200'
-    },
-    icecream: {
-      eyebrow: 'Luxury Ice Cream Cart',
-      title: 'Ice Cream Cart',
-      img: 'https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=800&q=80',
-      alt: 'Luxury Ice Cream Cart - Gelato',
-      desc: "Keep your guests cool with a gourmet, small-batch ice cream experience. Rich, handcrafted gelato and artisanal ice creams served in waffle cones or glass coupes.",
-      sections: [
-        { heading: 'CHOICE OF FLAVORS', items: ['Belgian Dark Chocolate & Madagascar Vanilla', 'Pistachio Gelato & Alphonso Mango Sorbet'] },
-        { heading: 'FRESH INGREDIENTS', items: ['Fresh Strawberries & Mango Cubes', 'Crushed Waffle Cones & Cookie Crumbs', 'Toasted Almonds & Pistachios'] },
-        { heading: 'SIGNATURE TOPPINGS', items: ['Warm Fudge & Salted Caramel Sauce', 'Rainbow Sprinkles & Maraschino Cherries', 'Whipped Cream'] }
-      ],
-      price: 'Starting at ₹15,000',
-      pricenote: 'for up to 100 pax | ₹25,000 for 200'
-    },
-    mithai: {
-      eyebrow: 'Luxury Mithai Cart',
-      title: 'Mithai Cart',
-      img: 'assets/images/rasgulla.jpg',
-      alt: 'Luxury Mithai Cart - Indian Sweets',
-      desc: "Reimagine traditional Indian sweets with modern, high-end presentation. Classic handcrafted sweetmeats with contemporary fusion twists on elegant brass and marble displays.",
-      sections: [
-        { heading: 'CHOICE OF MITHAI', items: ['Warm Mini Gulab Jamuns & Motichoor Laddoos', 'Saffron Rasmalai Cups'] },
-        { heading: 'FRESH INGREDIENTS', items: ['Saffron-Infused Milk', 'Crushed Pistachios & Almonds', 'Fresh Rose Petals'] },
-        { heading: 'SIGNATURE TOPPINGS', items: ['24k Edible Gold Leaf', 'Silver Vark & Cardamom Dust', 'Rabri Drizzle'] }
-      ],
-      price: 'Starting at ₹15,000',
-      pricenote: 'for up to 100 pax | ₹25,000 for 200'
-    },
-    south: {
-      eyebrow: 'Luxury South Indian Cart',
-      title: 'South Indian Cart',
-      img: 'https://images.unsplash.com/photo-1743615467204-8fdaa85ff2db?w=800&q=80',
-      alt: 'Luxury South Indian Cart - Dosa',
-      desc: "Bring the comforting, vibrant flavors of coastal South India to your venue. Crisp live-made dosas, mini button idlis, and piping-hot vadais with fresh coconut chutneys.",
-      sections: [
-        { heading: 'CHOICE OF BASE', items: ['Mini Mysore Masala Dosas', 'Steamed Button Idlis & Medu Vadas'] },
-        { heading: 'FRESH INGREDIENTS', items: ['Tempered Mustard & Curry Leaves', 'Spiced Potato Masala', 'Gunpowder (Podi) & Desi Ghee'] },
-        { heading: 'SIGNATURE CHUTNEYS', items: ['Fresh Coconut Chutney', 'Tangy Tomato-Garlic Chutney', 'Spicy Mint-Coriander Chutney'] }
-      ],
-      price: 'Starting at ₹15,000',
-      pricenote: 'for up to 100 pax | ₹25,000 for 200'
-    },
-    chinese: {
-      eyebrow: 'Luxury Chinese Cart',
-      title: 'Chinese Cart',
-      img: 'https://images.unsplash.com/photo-1750174558327-e13e0941f3a7?w=800&q=80',
-      alt: 'Luxury Chinese Cart - Indo-Chinese Noodles',
-      desc: "Capture the high-energy sizzle of live wok cooking. Freshly tossed Indo-Chinese favorites served piping hot in chic takeaway boxes for an energetic interactive meal.",
-      sections: [
-        { heading: 'CHOICE OF BASE', items: ['Vegetable Hakka Noodles', 'Fried Rice with Garden Veggies'] },
-        { heading: 'FRESH INGREDIENTS', items: ['Crisp Bell Peppers & Bok Choy', 'Spring Onions & Broccoli', 'Crispy Garlic & Green Chilies'] },
-        { heading: 'SIGNATURE MAINS & SAUCES', items: ['Chili Paneer / Manchurian', 'Schezwan Sauce Drizzle', 'Tangy Soy-Garlic Glaze'] }
-      ],
-      price: 'Starting at ₹15,000',
-      pricenote: 'for up to 100 pax | ₹25,000 for 200'
-    }
-  };
-
-  var cartModal = document.getElementById('cartModal');
-  var cartModalOverlay = document.getElementById('cartModalOverlay');
-  var cartModalClose = document.getElementById('cartModalClose');
-  var cartModalImg = document.getElementById('cartModalImg');
-  var cartModalEyebrow = document.getElementById('cartModalEyebrow');
-  var cartModalTitle = document.getElementById('cartModalTitle');
-  var cartModalDesc = document.getElementById('cartModalDesc');
-  var cartModalSections = document.getElementById('cartModalSections');
-  var cartModalPrice = document.getElementById('cartModalPrice');
-  var cartModalPricenote = document.getElementById('cartModalPricenote');
-  var cartModalEnquire = document.getElementById('cartModalEnquire');
-  var cartModalOpener = null;
-
-  function escapeHtml(str) {
-    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
-
-  function openCartModal(id) {
-    var data = cartData[id];
-    if (!data || !cartModal) return;
-    cartModalImg.src = data.img;
-    cartModalImg.alt = data.alt;
-    cartModalEyebrow.textContent = data.eyebrow;
-    cartModalTitle.textContent = data.title;
-    cartModalDesc.textContent = data.desc;
-    cartModalPrice.textContent = data.price;
-    cartModalPricenote.textContent = data.pricenote;
-    cartModalEnquire.setAttribute('data-cart-name', data.title);
-
-    var sectionsHtml = '';
-    data.sections.forEach(function (section) {
-      // text-charcoal was never defined in tailwind.config.js, so these
-      // headings silently inherited body colour instead. text-ash matches the
-      // muted tone used everywhere else in the modal.
-      sectionsHtml += '<p class="text-sm font-semibold text-ash mb-2 mt-5 first:mt-0">' + escapeHtml(section.heading) + '</p>';
-      sectionsHtml += '<ul class="text-sm text-ash space-y-1">';
-      section.items.forEach(function (item) {
-        sectionsHtml += '<li>• ' + escapeHtml(item) + '</li>';
-      });
-      sectionsHtml += '</ul>';
-    });
-    cartModalSections.innerHTML = sectionsHtml;
-
-    cartModal.classList.remove('hidden');
-    cartModal.classList.add('flex', 'active');
-    lockScroll();
-    cartModalOpener = document.activeElement;
-    cartModalClose.focus();
-  }
-
-  function closeCartModal() {
-    if (!cartModal) return;
-    cartModal.classList.add('hidden');
-    cartModal.classList.remove('flex', 'active');
-    unlockScroll();
-    if (cartModalOpener) cartModalOpener.focus();
-    cartModalOpener = null;
-  }
-
-  // .cart-tile is a real <button>, so Enter and Space already fire click and
-  // reach openCartModal. The extra keydown listener only double-bound them.
-  document.querySelectorAll('.cart-tile').forEach(function (tile) {
-    tile.addEventListener('click', function () {
-      openCartModal(tile.getAttribute('data-cart-id'));
-    });
-  });
-
-  if (cartModalClose) cartModalClose.addEventListener('click', closeCartModal);
-  if (cartModalOverlay) cartModalOverlay.addEventListener('click', closeCartModal);
-
-  document.addEventListener('keydown', function (e) {
-    if (!cartModal || !cartModal.classList.contains('active')) return;
-    if (e.key === 'Escape') closeCartModal();
-    trapFocus(cartModal, e);
-  });
-
-  document.querySelectorAll('.cart-enquire-btn').forEach(function (btn) {
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-      var cartName = this.getAttribute('data-cart-name');
-      var text = 'Hi, I\'m interested in the *' + cartName + '* for my event. Can you share details?';
-      var url = 'https://wa.me/' + cartWhatsappNumber + '?text=' + encodeURIComponent(text);
-      window.open(url, '_blank');
-    });
-  });
-
-  // ---- Bottom nav active state (mobile only) ----
-  var bottomNavLinks = document.querySelectorAll('[data-navlink]');
-  var navTargets = ['home', 'carts', 'gallery', 'contact'].map(function (id) {
-    return document.getElementById(id);
-  }).filter(Boolean);
-
-  function setActiveNav(id) {
-    bottomNavLinks.forEach(function (link) {
-      link.classList.toggle('active', link.getAttribute('data-navlink') === id);
-    });
-  }
-
-  if (navTargets.length && 'IntersectionObserver' in window) {
-    var navObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) setActiveNav(entry.target.id);
-      });
-    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
-    navTargets.forEach(function (s) { navObserver.observe(s); });
-  }
-
-  bottomNavLinks.forEach(function (link) {
-    link.addEventListener('click', function () {
-      setActiveNav(link.getAttribute('data-navlink'));
-    });
-  });
-
-});
+})();

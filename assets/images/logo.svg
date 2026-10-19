@@ -1,11 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-  <!-- Outer circle -->
-  <circle cx="100" cy="100" r="100" fill="#640017"/>
-  <!-- Inner border -->
-  <circle cx="100" cy="100" r="92" fill="none" stroke="#EFEFC9" stroke-width="2"/>
-  <!-- Text -->
-  <text x="100" y="95" font-family="Georgia, serif" font-size="24" fill="#EFEFC9" text-anchor="middle" font-style="italic">The</text>
-  <text x="100" y="118" font-family="Georgia, serif" font-size="32" fill="#EFEFC9" text-anchor="middle" font-weight="bold">cart</text>
-  <text x="100" y="140" font-family="Georgia, serif" font-size="20" fill="#EFEFC9" text-anchor="middle">&amp; culinary</text>
-  <text x="100" y="158" font-family="Georgia, serif" font-size="18" fill="#EFEFC9" text-anchor="middle" font-style="italic">co.</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="The Cart &amp; Culinary Co.">
+  <!-- Transparent-background brand mark: a gold line-art serving cart.
+       Content is centred on the 64x64 canvas so it optically balances at
+       every render size, and it reads equally on cream and dark surfaces. -->
+  <g fill="none" stroke="#C9A24B" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round">
+    <!-- canopy -->
+    <path d="M14 24 Q14 11 32 11 Q50 11 50 24"/>
+    <!-- canopy edge -->
+    <path d="M10 24 H54"/>
+    <!-- cart body -->
+    <path d="M16 28 V44 H48 V28"/>
+    <!-- counter line -->
+    <path d="M12 28 H52"/>
+    <!-- window -->
+    <rect x="25" y="32" width="14" height="8"/>
+    <!-- wheels -->
+    <circle cx="24" cy="50" r="3.6"/>
+    <circle cx="40" cy="50" r="3.6"/>
+  </g>
 </svg>
