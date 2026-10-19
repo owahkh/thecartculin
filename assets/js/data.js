@@ -605,12 +605,89 @@ window.TCC = (function () {
         },
       ],
     },
+
+    /* ---- Category 08: gifts and take-home favours ---- */
+    {
+      id: 'gifts',
+      name: 'Take-home & Gifts',
+      brand: 'The Favor Route',
+      tagline: 'Guests should leave with something in their hands, not just a photo on their phone.',
+      icon: 'gifts',
+      longDescription:
+        'A wedding or nikah is remembered through what goes home in it. This route closes the function: favours packed at the exit, jars labelled with your names, plants that outlive the evening, potli bags with attar and a note from your family, and photo keepsakes printed while the queue still smells of kheer.',
+      bestFor: ['Reception exits', 'Nikah and Walima', 'Aqiqa', 'Ritual-adjacent gifting', 'Corporate hampers'],
+      carts: [
+        {
+          id: 'gift-favor',
+          name: 'Take-home Favor Cart',
+          tagline: 'A packed, ribboned gift for every guest',
+          note: 'Exit counter for packed favours',
+          description:
+            'Set at the exit so the last thing a guest does is receive something from you. Mithai, dry-fruit or souvenir boxes are packed and ribboned at the counter in your colours, with name tags if you send the list.',
+          details: [
+            { heading: 'We pack', items: ['Mithai and dry-fruit boxes', 'Souvenir tins and jars', 'Occasion keepsakes to your theme'] },
+            { heading: 'Finishing', items: ['Ribbon in your palette', 'Personalised name tags', 'Head count confirmed in advance'] },
+          ],
+        },
+        {
+          id: 'gift-jars',
+          name: 'Personalised Jar Cart',
+          tagline: 'Jars filled and labelled in front of the guest',
+          note: 'Live-filled jars with custom labels',
+          description:
+            'Guests watch their own jar being filled — chikki, cookie mix, granola or a spiced chai blend — then labelled with your names and date while they hold it. A favour and a small show in one.',
+          details: [
+            { heading: 'Jar menu', items: ['Roasted almond and cashew blend', 'Homemade chikki and choco-bites', 'Masala chai blend with recipe card', 'Cookie and rusk mix'] },
+            { heading: 'Labels', items: ['Your names and date', 'Calligraphy to match the invite', 'Messages for nikah, walima or aqiqa'] },
+          ],
+        },
+        {
+          id: 'gift-plants',
+          name: 'Terracotta & Plant Cart',
+          tagline: 'Living favours that go home, not in the bin',
+          note: 'Mini plants and terracotta keepsakes',
+          description:
+            'Mini succulents, herb pots and hand-painted terracotta keepsakes arranged as table-ready gifts. Nothing is plastic and nothing is thrown away — it goes into a home and stays, which is the whole point.',
+          details: [
+            { heading: 'On the cart', items: ['Mini succulents and money plants', 'Basil and curry-leaf herb pots', 'Hand-painted terracotta keepsakes'] },
+            { heading: 'Details', items: ['Names or monograms on tags', 'Kraft wrap or your palette', 'Sourced from Delhi nurseries'] },
+          ],
+        },
+        {
+          id: 'gift-potli',
+          name: 'Potli & Attar Cart',
+          tagline: 'Hand-tied potli bags with attar minis and a family note',
+          note: 'Potli, attar and fragrance favours',
+          description:
+            'The favour people remember: velvet or raw-silk potli bags holding an attar or itra mini, a dry-fruit sachet and a message card signed by your family. Quietly elegant and perfectly suited to nikah, walima and aqiqa gifting.',
+          details: [
+            { heading: 'Inside the potli', items: ['Attar or itra mini (2 ml)', 'Dry-fruit or cardamom sachet', 'Message card from the family'] },
+            { heading: 'Finish', items: ['Velvet or raw-silk potli in your colours', 'Gold-stamped monograms', 'Attar blends on request'] },
+          ],
+        },
+        {
+          id: 'gift-keepsake',
+          name: 'Photo Keepsake Cart',
+          tagline: 'A fridge magnet or keychain of the guest, in minutes',
+          note: 'Instant photo-magnet and keychain prints',
+          description:
+            'Guests snap a photo at the booth or on this cart\'s own stand, and the print lands in about three minutes — a fridge magnet, keychain or mini frame with your names under it. The favour people actually keep.',
+          details: [
+            { heading: 'Outputs', items: ['Fridge magnets', 'Keychains and bottle openers', 'Mini framed selfie prints'] },
+            { heading: 'Workflow', items: ['Ties into the Photo & 360 Booth if booked together', 'Standalone tripod stand otherwise', 'Roughly 200 prints per cart shift'] },
+          ],
+        },
+      ],
+    },
   ];
 
   /* ---- Occasions, used for the "what are you planning" navigation ---- */
   var occasions = [
-    { id: 'wedding', name: 'Wedding', detail: 'Mehendi, sangeet, baraat, reception', featuredCarts: ['golgappa', 'tandoor', 'kunafa', 'chai-tapri', 'bangles-cart', 'shawarma'] },
-    { id: 'halfunction', name: 'Haldi & Mehndi', detail: 'Colour, rituals and easy daytime food', featuredCarts: ['bachpan-ki-yaadein', 'coconut-cart', 'mocktail-cart', 'perfume-bar', 'bracelet-cart'] },
+    { id: 'wedding', name: 'Wedding', detail: 'Mehendi, sangeet, baraat, reception', featuredCarts: ['golgappa', 'tandoor', 'kunafa', 'chai-tapri', 'bangles-cart', 'gift-favor'] },
+    { id: 'nikah', name: 'Nikah', detail: 'The signing ceremony — elegant, unhurried', featuredCarts: ['mocktail-cart', 'perfume-bar', 'kunafa', 'gift-potli', 'chai-tapri'] },
+    { id: 'walima', name: 'Walima', detail: 'The banquet — a full plate and a warm exit', featuredCarts: ['tandoor', 'shawarma', 'asian-wok', 'mocktail-cart', 'gift-favor'] },
+    { id: 'aqiqa', name: 'Aqiqa', detail: 'The naming day — soft food for a family crowd', featuredCarts: ['coconut-cart', 'bachpan-ki-yaadein', 'kids-maggie', 'cake-pastry', 'gift-jars'] },
+    { id: 'haldi', name: 'Haldi & Mehndi', detail: 'Colour, rituals and easy daytime food', featuredCarts: ['bachpan-ki-yaadein', 'coconut-cart', 'mocktail-cart', 'perfume-bar', 'bracelet-cart'] },
     { id: 'sangeet', name: 'Sangeet', detail: 'Late night, high energy, walking food', featuredCarts: ['asian-wok', 'mocktail-cart', 'games-carnival', 'giant-games', 'front-bar'] },
     { id: 'corporate', name: 'Corporate Event', detail: 'Office, conferences, dealer meets', featuredCarts: ['coffee-cart', 'pasta', 'slush-shake', 'pizza', 'mocktail-cart'] },
     { id: 'birthday', name: 'Birthday & Kitty', detail: 'Something for every age group', featuredCarts: ['candy-floss', 'kids-maggie', 'cake-pastry', 'pancake', 'ice-cream'] },

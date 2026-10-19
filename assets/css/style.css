@@ -447,10 +447,18 @@ section { padding: clamp(3.5rem, 8vw, 7rem) 0; }
   display: flex;
   flex-direction: column;
 }
-/* 7 categories + promo = 8 cells: 4-col fills 2 exact rows, 2-col fills 4.
-   Only the 3-column band is lopsided, so only it needs the spanning fix. */
-@media (min-width: 1024px) and (max-width: 1279px) {
+/* 8 categories + promo = 9 cells. At 3 columns the row lands 3+3+3 exactly,
+   so the promo holds a normal cell there. At 2 and 4 columns the eight
+   categories fill exact rows and the promo closes the grid as a full-width
+   royal banner; its link list splits into two newspaper columns when wide. */
+@media (min-width: 640px) and (max-width: 1023px) {
   .category-grid .cat-cell:last-child { grid-column: span 2; }
+  .category-grid .cat-cell.is-promo .cat-cell-list { columns: 2; column-gap: 2.5rem; }
+}
+@media (min-width: 1280px) {
+  .category-grid .cat-cell:last-child { grid-column: 1 / -1; }
+  .category-grid .cat-cell.is-promo { padding: 2.75rem 2.5rem; }
+  .category-grid .cat-cell.is-promo .cat-cell-list { columns: 2; column-gap: 2.5rem; max-width: 62rem; }
 }
 
 .cat-cell-head {
@@ -553,7 +561,14 @@ section { padding: clamp(3.5rem, 8vw, 7rem) 0; }
 }
 @media (min-width: 640px)  { .occasion-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 1024px) { .occasion-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (min-width: 1280px) { .occasion-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 1280px) { .occasion-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+
+/* 10 occasions: two exact rows of 3 in the tablet band; the 1280px row
+   fills 5+5 exactly, so the grid closes flush at both wide breakpoints.
+   In the 3-column band (1024–1279) the tenth card spans full width. */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .occasion-grid .occasion-cell:last-child { grid-column: 1 / -1; }
+}
 
 .occasion-cell { background: var(--cream); padding: 1.75rem 1.5rem; }
 .occasion-cell-head {
@@ -793,7 +808,7 @@ section { padding: clamp(3.5rem, 8vw, 7rem) 0; }
   gap: 2.5rem 2rem;
 }
 @media (min-width: 640px)  { .why-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 1024px) { .why-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .why-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
 
 .why-item { padding-top: 1.25rem; border-top: 1px solid rgba(247, 242, 228, 0.2); }
 .why-item h3 { font-size: 1.0625rem; color: var(--gold-light); margin: 0 0 0.5rem; }

@@ -25,6 +25,7 @@ const PAGES = [
   { path: '/categories/haldi-mehndi/', checks: [['.cart-row', 'cart rows']] },
   { path: '/categories/kids/', checks: [['.cart-row', 'cart rows']] },
   { path: '/categories/games/', checks: [['.cart-row', 'cart rows']] },
+  { path: '/categories/gifts/', checks: [['.cart-row', 'cart rows']] },
 ];
 
 (async () => {
@@ -119,8 +120,8 @@ const PAGES = [
   console.log((drawerOpen ? '  ok   ' : '  FAIL ') + 'mobile drawer opens');
   if (!drawerOpen) failures++;
   const drawerCats = await mpage.locator('.mobile-category-menu details').count();
-  console.log((drawerCats === 7 ? '  ok   ' : '  FAIL ') + 'mobile drawer lists 7 categories — got ' + drawerCats);
-  if (drawerCats !== 7) failures++;
+  console.log((drawerCats === 8 ? '  ok   ' : '  FAIL ') + 'mobile drawer lists 8 categories — got ' + drawerCats);
+  if (drawerCats !== 8) failures++;
 
   await mpage.locator('.mobile-category-menu summary').first().click();
   await mpage.waitForTimeout(250);

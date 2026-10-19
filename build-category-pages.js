@@ -15,6 +15,7 @@ const CATEGORIES = [
   ['haldi-mehndi', 'Haldi, Mehndi &amp; Rituals'],
   ['kids', 'Kids &amp; Little Delights'],
   ['games', 'Games &amp; Entertainment'],
+  ['gifts', 'Take-home &amp; Gifts'],
 ];
 
 const WHATSAPP = '919312431445';
